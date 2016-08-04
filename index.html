@@ -5,23 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TCGConquest</title>
       <!-- AngularJS library links -->
+<!--
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
+-->
+      <script src="./asset/lib/angular.min.js"></script>
+      <script src="./asset/lib/angular-animate.min.js"></script>
       
       <!-- Link to script with custom module, controllers, and directives -->  
-      <script type="text/javascript" src="js/kickstart.min.js"></script>
-      <script src="./js/appv2.js"></script> 
+      <script type="text/javascript" src="./asset/js/kickstart.min.js"></script>
+      <script src="./app.module.js"></script> 
+      <script src="./app/achievements/achievements.directive.js"></script>
+      <script src="./app/achievements/achievements.module.js"></script>
+      <script src="./app/achievements/achievements.service.js"></script>
+      <script src="./app/layout/footer.directive.js"></script>
+      <script src="./app/layout/notification.service.js"></script>
+      <script src="./app/rarecard/rarecard.module.js"></script>
+      <script src="./app/rarecard/rarecard.service.js"></script>
+      <script src="./app/services/BoosterName.service.js"></script>
+      <script src="./app/services/GameName.factory.js"></script>
+      <script src="./app/services/number.service.js"></script>
+      <script src="./app/data/save.module.js"></script>
+      <script src="./app/data/load.service.js"></script>
+      <script src="./app/data/save.service.js"></script>
+      <script src="./app/upgrades/upgrades.module.js"></script>
+      <script src="./app/upgrades/upgrades.service.js"></script>
+      <script src="./app/upgrades/retail.value.js"></script>
+      <script src="./app/upgrades/card.value.js"></script>
+      <script src="./app/upgrades/marketing.value.js"></script>
       
       <!-- Kickstrap -->
-      <link rel="stylesheet" href="./css/kickstart.min.css" />
+      <link rel="stylesheet" href="./asset/css/kickstart.min.css" />
       
       <!-- Font Awesome -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+      <link rel="stylesheet" href="./asset/css/font-awesome.min.css">
       
       <!--Utility OpenType-->
-      <link href="./css/utility-opentype.min.css" rel="stylesheet">
+      <link href="./asset/css/utility-opentype.min.css" rel="stylesheet">
       
-      <link rel="stylesheet" href="./css/customstyle.css" />
+      <link rel="stylesheet" href="./asset/css/customstyle.css" />
   </head>
   <body ng-controller="MainController">
       <br>
@@ -163,13 +185,10 @@
                   <a data-modal-close="true" href="#">&times;</a>
               </header>
               <main>
+                  <settings></settings>
+                  <p><a href="" ng-click="exportGame()">Export save file</a> / <a href="" ng-click="loadGame()">Import save file</a></p>
                   <p><a href="" ng-click="nameYourGame()">Change your TCG's name</a></p>
-                  <a href="" ng-click="resetGame()">Clear save file</a>
-                  <div class="alert delete-alert" ng-show="deleteWarning()">
-                      <h1>Attention</h1>
-                      <p>Are you sure you want to delete your save file? It'll be gone forever!</p>
-                      <p><button class="button button-red" ng-click="deleteWarning()">No, don't delete it</button> <button class="button button-green" ng-click="resetGame()">Yes, delete it</button></p>
-                  </div>
+                  <p><a href="" ng-click="resetGame()">Clear save file</a></p>
               </main>
           </div>
           
@@ -192,7 +211,6 @@
             $settingsModal.style.display = 'block';  e.stopPropagation();
         });
     </script>
-<!--
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -202,7 +220,6 @@
         ga('create', 'UA-75793908-2', 'auto');
         ga('send', 'pageview');
     </script>
--->
   </body>
 </html>
 <!--http://cbracco.me/css-sticky-footer-effect/-->
