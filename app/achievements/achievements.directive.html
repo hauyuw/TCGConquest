@@ -1,0 +1,14 @@
+<div class="row pull-center">Earned {{earnedCount}} out of {{count}} achievements<br><br></div>
+<div class="achievement-overflow row">
+    <div class="col-2" ng-repeat="achievements in achievementList">
+        <section class="card-style" ng-class="{'have':showAchievement($index), 'donothave':!showAchievement($index)}">
+            <i class="fa fa-question-circle-o fa-2x" ng-show="!showAchievement($index)"></i>
+<!--            <i class="fa fa-trophy fa-2x" ng-show="showAchievement($index)"></i><br>-->
+            <span class="tooltip_trigger" ng-show="showAchievement($index)">
+            <em>{{achievements.name}}</em>
+<!--                <span class="tooltip tooltip-bottom tooltip-green">{{achievements.blurb}}</span>-->
+            </span>
+            <br><br><small>{{achievements.criteria}}</small>
+        </section>
+    </div>
+</div>
