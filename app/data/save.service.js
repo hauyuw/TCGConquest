@@ -8,8 +8,10 @@ angular.module('saveModule')
             var keyName = arrayName[i].id;
             var keyValue = arrayName[i].count;
             var obj = {};
-            obj[keyName] = keyValue;
-            saveArray[i] = obj;
+            if (arrayName[i].show) {
+                obj[keyName] = keyValue;
+                saveArray[i] = obj;
+            }
         }
     };
       

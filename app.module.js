@@ -16,12 +16,15 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
     $scope.cardsSoldDisplay = '';
     $scope.cardFlowDisplay = '';
     $scope.gameName = '';
+    $scope.lastTimeStamp = new Date();
+    var deleteDialogLoc = './app/data/delete-confirmation.template.html';
+    var starterDialogLoc = './app/data/starterModal.template.html';
       
     //data binding for achievementService variables
-    $scope.$watch( function () { return achievementService.count; }, function ( count ) {
+    $scope.$watch( function () { return achievementService.count; }, function(count) {
         $scope.count = count;
     });
-    $scope.$watch( function () { return achievementService.earnedCount;}, function ( earnedCount ) {
+    $scope.$watch( function () { return achievementService.earnedCount;}, function(earnedCount) {
         $scope.earnedCount = earnedCount;
     });
       
@@ -31,23 +34,41 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         $scope.cardsSoldDisplay = numberService.formatForDisplay(gameData.cardsSold);
         $scope.cardFlowDisplay = numberService.formatForDisplay(gameData.cardFlow);
     };
+      
+    //updates the duration of game in save data based on how much time has elapsed since the last time stamp taken in current session
+    var updateSessionLength = function() {
+        var currentTime = new Date();
+        currentTime = currentTime.getTime();
+        var elapsedTime = currentTime - $scope.lastTimeStamp;
+        $scope.sessionLength = elapsedTime;
+        $scope.lastTimeStamp = currentTime;
+        gameData.duration += $scope.sessionLength;
+        console.log('game has been running for ' + gameData.duration/60000 + ' minutes');
+    };
     
+    //TO DO: MOVE INTO ITS OWN SERVICE
+    var openDialog = function(location) {
+         ngDialog.open({ 
+            template: location,
+             className: 'ngdialog-theme-default',
+             closeByEscape: false,
+             closeByDocument: false,
+             showClose: false,
+             scope: $scope
+         });
+     };
+    var closeDialog = function(location) {
+        ngDialog.close({ 
+            template: location,
+            className: 'ngdialog-theme-default',
+        });
+    };
+      
     $scope.randomizeGameName = function() {
         $scope.gameName = generateRandomGameName.shuffle();
-        
         //CHEAP FIX; FIND BETTER WAY IF THERE'S TIME
-        ngDialog.close({ 
-            template: './app/data/starterModal.directive.html',
-            className: 'ngdialog-theme-default',
-        });
-        ngDialog.open({ 
-            template: './app/data/starterModal.template.html',
-            className: 'ngdialog-theme-default',
-            closeByEscape: false,
-            closeByDocument: false,
-            showClose: false,
-            scope: $scope
-        });
+        closeDialog(starterDialogLoc);
+        openDialog(starterDialogLoc);
     };
       
     $scope.nameYourGame = function() {
@@ -56,14 +77,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         } else {
             $scope.gameName = gameData.gameName;
         }
-        ngDialog.open({ 
-            template: './app/data/starterModal.template.html',
-            className: 'ngdialog-theme-default',
-            closeByEscape: false,
-            closeByDocument: false,
-            showClose: false,
-            scope: $scope
-        });
+        openDialog(starterDialogLoc);
     };
       
     $scope.namingGame = function(nameInput) {
@@ -72,34 +86,30 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         } else {
             gameData.gameName = angular.copy(nameInput);
         }
-        
-        ngDialog.close({ 
-            template: './app/data/starterModal.directive.html',
-            className: 'ngdialog-theme-default',
-        });
+        closeDialog(starterDialogLoc);
     }
       
-    //TO FIX
-    $scope.deleteWarning = function(instruction) {
-        if (instruction === 'open') {
-            return true;
-        } else {
-            return false;
-            console.log("hide alert");
-        } 
+    $scope.deleteWarning = function() {
+        openDialog(deleteDialogLoc);
     };
+      
+    $scope.closeWarning = function() {
+        closeDialog(deleteDialogLoc);
+     };
       
     $scope.saveGame = function() {
         saveService.convertUpgrades(retailUpgrades, gameData.retail_upgrades);
         saveService.convertUpgrades(cardUpgrades, gameData.card_upgrades);
         saveService.convertUpgrades(marketingUpgrades, gameData.marketing_upgrades);
         saveService.convertAchievements(achievementService.achievementList, gameData.achievements);
+        updateSessionLength();
         localStorage['tcgconquest_save'] = btoa(JSON.stringify(gameData));
         ga('send', 'event', 'TCGConquest', 'Save');
         notificationService.giveStatus('Game saved', 'green');
     };
       
     $scope.loadGame = function() {
+        $scope.sessionStart = $scope.lastTimeStamp.getTime();
         if (!localStorage['tcgconquest_save']) {
             $scope.nameYourGame();
             console.log("game is named");
@@ -220,6 +230,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         gameData.income += gameData.incomeRate;
         gameData.income = numberService.tidyUpNum(gameData.income);
         gameData.incomeRate = numberService.tidyUpNum(gameData.incomeRate);
+        updateSessionLength();
         setNumDisplays();
     };
     

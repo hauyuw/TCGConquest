@@ -41,7 +41,7 @@ input[type="text"]#gamename {
     border-radius: 0.3rem;
 }
 .have {
-    background: yellow;
+    background: gold;
 }
 .donothave {
     color: white;

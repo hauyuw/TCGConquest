@@ -1,6 +1,6 @@
 <div class="ngdialog-theme-default">
     <form name="start">
-        <center><label for="gamename" class="rg">What is the name of your card game?</label>
+        <center><label for="gamename" class="rg">What will you call your card game?</label>
         <input name="gamename" id ="gamename" type="text" ng-model="gameName" ng-model-options="{ getterSetter: true }" ng-maxlength="100" required />
         <span class="error" ng-show="start.gamename.$error.required">Please enter a name. You can always change it later.</span>
         <span class="error" ng-show="start.gamename.$error.ngMaxlength">Try something shorter.</span><br><br>

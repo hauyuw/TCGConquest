@@ -114,7 +114,7 @@ angular.module('achievementModule', ['saveModule', 'upgradesModule'])
                 this.earnedCount++;
             }
         }
-        console.log(this.earnedCount);
+//        console.log(this.earnedCount);
     };
     
     this.checkAchievementCriteria = function(placeToCheck, criteriaToFind, numCriteria) {

@@ -17,7 +17,7 @@ angular.module('saveModule')
         for (var i = 0; i < saveArray.length; i++) {
             var searchKey = Object.getOwnPropertyNames(saveArray[i]);
             var propValue = saveArray[i][searchKey];
-            if (arrayName[i].id == searchKey && propValue > 0) {
+            if (arrayName[i].id == searchKey && propValue >= 0) {
                 arrayName[i].count = propValue;
                 arrayName[i].show = true;
                 arrayName[i].cost = this.recalculateCost(arrayName, i, propValue);

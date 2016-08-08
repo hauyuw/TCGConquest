@@ -102,7 +102,7 @@
                           <span class="tooltip tooltip-bottom tooltip-blue">
                               <em>{{stores.blurb}}</em><br><br>
                               <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>{{stores.adjustedIncomeRate}}/sec<br>  
-                              <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sell +{{stores.adjustedCardFlow}} cards/sec
+                              <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{stores.adjustedCardFlow}} cards/sec
                           </span>
                           <button class="button button-retail col-12" ng-class="{'disable-button' : checkAffordability(retailUpgrades, $index)}" ng-show="showUpgrade(retailUpgrades, $index)" ng-click="buyUpgrade(retailUpgrades, $index)">
                               <div class="row">
@@ -128,7 +128,7 @@
                           <span class="tooltip tooltip-bottom tooltip-blue">
                               <em>{{upgrades.blurb}}</em><br><br>
 <!--                              +<i class="fa fa-jpy"></i>{{upgrades.adjustedIncomeRate}}/sec<br>-->
-                              <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sell +{{upgrades.adjustedCardFlow}} cards/sec<br>
+                              <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{upgrades.adjustedCardFlow}} cards/sec<br>
                               <span ng-show="upgrades.adjustedRareCardRate"><i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>x{{upgrades.adjustedRareCardRate}} chance of rare cards/sec</span>
                           </span>
                           <button class="button button-card col-12"  ng-class="{'disable-button' : checkAffordability(cardUpgrades, $index)}" ng-show="showUpgrade(cardUpgrades, $index)" ng-click="buyUpgrade(cardUpgrades, $index)">
@@ -155,7 +155,7 @@
                           <span class="tooltip tooltip-bottom tooltip-blue">
                               <em>{{dominate.blurb}}</em><br><br>
                               <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>{{dominate.adjustedIncomeRate}}/sec<br>    
-                              <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sell +{{dominate.adjustedCardFlow}} cards/sec
+                              <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{dominate.adjustedCardFlow}} cards/sec
                           </span>
                           <button class="button button-marketing col-12" ng-class="{'disable-button' : checkAffordability(marketingUpgrades, $index)}" ng-show="showUpgrade(marketingUpgrades, $index)" ng-click="buyUpgrade(marketingUpgrades, $index)">
                               <div class="row">
@@ -193,7 +193,7 @@
                   <settings></settings>
                   <p><a href="" ng-click="exportGame()">Export save file</a> / <a href="" ng-click="loadGame()">Import save file</a></p>
                   <p><a href="" ng-click="nameYourGame()">Change your TCG's name</a></p>
-                  <p><a href="" ng-click="resetGame()">Clear save file</a></p>
+                  <p><a href="" ng-click="deleteWarning()">Clear save file</a></p>
               </main>
           </div>
           
@@ -202,14 +202,6 @@
       <div class="footer">
           <footer></footer>
       </div>
-      
-    <script type="text/ng-template" id="startingModal">
-        <div class="ngdialog-theme-default">
-              <label for="gamename">What is the name of your card game?</label>
-              <input id ="gamename" type="text" /><br>
-              <input ng-click="namingGame()" value="Let's Play" type="submit" />
-          </div>
-    </script>
       
     <script>
         $sampleModal = k$.modal('#achievementModal');

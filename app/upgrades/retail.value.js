@@ -7,7 +7,7 @@ angular.module('upgradesModule')
         cost: 100,
         unlockThreshold: 0,
         costIncreaseRate: 1.1,
-        adjustedCardFlow: 0.10,
+        adjustedCardFlow: 0.50,
         adjustedIncomeRate: 1,
         count: null,
         show: false
@@ -19,7 +19,7 @@ angular.module('upgradesModule')
         cost: 500,
         unlockThreshold: 0,
         costIncreaseRate: 1.1,
-        adjustedCardFlow: 0.5,
+        adjustedCardFlow: 1,
         adjustedIncomeRate: 2,
         count: null,
         show: false
@@ -28,7 +28,7 @@ angular.module('upgradesModule')
         name: 'CardGames R Us',
         id: 'R3',
         blurb: "You're always a child at heart",
-        cost: 3000,
+        cost: 1500,
         unlockThreshold: 0,
         costIncreaseRate: 1.1,
         adjustedCardFlow: 4,
@@ -43,7 +43,7 @@ angular.module('upgradesModule')
         cost: 5000,
         unlockThreshold: 0,
         costIncreaseRate: 1.1,
-        adjustedCardFlow: 1,
+        adjustedCardFlow: 6,
         adjustedIncomeRate: 50,
         count: null,
         show: false
@@ -55,8 +55,8 @@ angular.module('upgradesModule')
         cost: 10000,
         unlockThreshold: 0,
         costIncreaseRate: 1.1,
-        adjustedCardFlow: 1,
-        adjustedIncomeRate: 50,
+        adjustedCardFlow: 10,
+        adjustedIncomeRate: 100,
         count: null,
         show: false
     },
