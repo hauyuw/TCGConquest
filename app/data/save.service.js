@@ -3,6 +3,7 @@
 angular.module('saveModule')
     .service('saveService', function() {
     
+    //creates new array containing objects that record how many of each upgrade the player currently owns
     this.convertUpgrades = function(arrayName, saveArray) {
         for (var i = 0; i < arrayName.length; i++) {
             var keyName = arrayName[i].id;
@@ -14,7 +15,8 @@ angular.module('saveModule')
             }
         }
     };
-      
+    
+    //creates new array containing objects that record which achievements the player has earned
     this.convertAchievements = function(arrayName, saveArray) {
         for (var i = 0; i < arrayName.length; i++) {
             var keyName = arrayName[i].id;
@@ -25,6 +27,7 @@ angular.module('saveModule')
         }
     };
     
+    //creates a text file with the stringified JSON save data for download in browser
     this.exportSave = function(content, filename) {
         var blob = new Blob([content], {type: "text/text"});
         
@@ -44,7 +47,7 @@ angular.module('saveModule')
         ga('send', 'event', 'TCGConquest', 'Save');
     };
     
-    //return time stamp in format of "mm-dd-yyyy_HH:MM:ssTT"
+    //returns time stamp in format of "mm-dd-yyyy_HH:MM:ssTT"
     this.timeStamp = function() {
         var now = new Date();
         var date = [now.getMonth() + 1, now.getDate(), now.getFullYear()];

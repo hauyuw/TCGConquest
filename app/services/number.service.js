@@ -3,6 +3,7 @@
 angular.module('app')
     .service('numberService', function() {
     
+    //format numbers to have commas at the hundredth places
     this.formatForDisplay = function(numToFormat) {
         return numToFormat.toLocaleString();
     };

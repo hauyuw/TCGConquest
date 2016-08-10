@@ -3,8 +3,8 @@
 angular.module('app')
     .service('generateRandomGameName', function() {
     var randomGameName;
-    var word1 = ['WIXOSS', 'Battle', 'Duel', 'Magic', 'Cardfight!!', 'Card', 'Dragon', 'Epic', 'Knights of', 'The Last'];
-    var word2 = ['Masters', 'Buddyfight', 'Monsters', 'the Gathering', 'Vanguard', 'Wars', 'King', 'Queen', 'Showdown', 'Quest'];
+    var word1 = ['WIXOSS', 'Battle', 'Duel', 'Magic', 'Cardfight!!', 'Card', 'Dragon', 'Epic', 'Knights of', 'The Last', "Wizard's"];
+    var word2 = ['Masters', 'Buddyfight', 'Monsters', 'the Gathering', 'Vanguard', 'Wars', 'King', 'Queen', 'Showdown', 'Quest', 'Soul'];
     var randomNum1;
     var randomNum2;
     

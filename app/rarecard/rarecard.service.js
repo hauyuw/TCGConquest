@@ -1,6 +1,6 @@
 (function () {
     
-angular.module('rareCardModule', [])
+angular.module('rareCardModule')
     .service('rareCardService', function() {
     
      //game of fate

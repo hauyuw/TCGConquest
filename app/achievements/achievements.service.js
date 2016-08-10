@@ -2,6 +2,7 @@
     
 angular.module('achievementModule', ['saveModule', 'upgradesModule'])
     .service('achievementService', ['gameData', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'notificationService', function(gameData, retailUpgrades, cardUpgrades, marketingUpgrades, notificationService) {
+    //list of all achievements
     this.achievementList = [
         {
             name: 'Your Story',
@@ -107,6 +108,7 @@ angular.module('achievementModule', ['saveModule', 'upgradesModule'])
     this.count = this.achievementList.length;
     this.earnedCount;
         
+    //run this method to find out how many total achievements have been earned
     this.checkEarned = function() {
         this.earnedCount = 0;
         for (var i = 0; i < this.achievementList.length; i++) {
@@ -117,6 +119,7 @@ angular.module('achievementModule', ['saveModule', 'upgradesModule'])
 //        console.log(this.earnedCount);
     };
     
+    //if given achievement meets the criteria to be earned, return true; otherwise returns false
     this.checkAchievementCriteria = function(placeToCheck, criteriaToFind, numCriteria) {
         if (placeToCheck === gameData) {
 //            console.log('checking criteria ' + numCriteria + ' in ' + gameData + '.' + criteriaToFind + ' = ' + gameData[criteriaToFind]);
@@ -138,6 +141,7 @@ angular.module('achievementModule', ['saveModule', 'upgradesModule'])
         return false;
     };
     
+    //runs through list of achievements to see if any new ones have been earned, will produce a notification reporting how many if true
     this.checkAchievementStatus = function() {
         var newCount = 0;
         for (var i = 0; i < this.achievementList.length; i++) {
