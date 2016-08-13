@@ -3,7 +3,7 @@ angular.module('notificationModule', [])
     //helper method for issuing notifications in the UI
     this.giveStatus = function(message, color) {
         k$.status({       
-            text: '<h4>' + message + '</h4>',
+            text: '<span class="xs">' + message + '</span>',
             type: 'status-'+color
         });
     };

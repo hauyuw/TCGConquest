@@ -1,1 +1,1 @@
-angular.module('rareCardModule', ['saveModule']);
+angular.module('rareCardModule', []);
