@@ -1,9 +1,11 @@
 angular.module('saveModule', [])
     //store game data and variables
-    .value('gameData', {
+    .value('config', {
     version: '0.5',
+    basicClicker: 10,  //income from clicking the basic clicker
+})
+    .value('gameData', {
     gameName: '',
-    basicClicker: 10, //income from clicking the basic clicker
     clicks: 0,
     cardsSold: 0,
     cardFlow: 0,

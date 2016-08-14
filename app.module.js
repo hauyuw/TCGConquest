@@ -4,8 +4,8 @@
 var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'notificationModule', 'rareCardModule']);
 
 //main AngularJS controller for the game 
-app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService',
-  function($scope, $interval, ngDialog, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService) {
+app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService',
+  function($scope, $interval, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService) {
     $scope.game = gameData;
     $scope.retailUpgrades = retailUpgrades;
     $scope.cardUpgrades = cardUpgrades;
@@ -66,7 +66,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
       
     $scope.debugLog = function() {
         ngDialog.open({ 
-             template: 'version: ' + gameData.version + '<br>game name: ' + gameData.gameName + '<br>clicks: ' + gameData.clicks,
+             template: 'version: ' + config.version + '<br>game name: ' + gameData.gameName + '<br>clicks: ' + gameData.clicks,
              plain: true
          });
         var fileContent = JSON.stringify(gameData);
@@ -145,7 +145,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         if(gameData.gameName === '') {
             $scope.nameYourGame();
         }
-        console.log('version ' + gameData.version);
+        console.log('version ' + config.version);
 //        console.log(retailUpgrades);
 //        console.log(achievementService.achievementList);
     };
@@ -167,7 +167,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
     $scope.cardClick = function() {
         gameData.cardsSold++;
         gameData.clicks++;
-        gameData.income += gameData.basicClicker;
+        gameData.income += config.basicClicker;
         upgradeService.checkAvailability(retailUpgrades, gameData);
         upgradeService.checkAvailability(cardUpgrades, gameData);
         upgradeService.checkAvailability(marketingUpgrades, gameData);

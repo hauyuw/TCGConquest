@@ -1,0 +1,89 @@
+<div class="row tab-overflow">
+<div class="col-third">
+    <section>
+        <p>Step 1: Sell cards</p>
+        <p><span class="tooltip_trigger col-11">
+            <span class="tooltip tooltip-bottom tooltip-violet">
+                <em>Minimum viable product will ship in 8 months to never</em><br><br>
+                <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>10<br>
+                <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells 1 card
+            </span>
+            <button class="button button-retail col-12" ng-click="cardClick()">Crowdfunding</button>
+            </span>
+        </p>
+        <p ng-repeat="stores in retailUpgrades">
+            <span class="tooltip_trigger col-11">
+                <span class="tooltip tooltip-bottom tooltip-violet">
+                    <em>{{stores.blurb}}</em><br><br>
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>{{stores.adjustedIncomeRate}}/sec<br>
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{stores.adjustedCardFlow}} cards/sec
+                </span>
+                <button class="button button-retail col-12" ng-class="{'disable-button' : checkAffordability(retailUpgrades, $index)}" ng-show="showUpgrade(retailUpgrades, $index)" ng-click="buyUpgrade(retailUpgrades, $index)">
+                    <div class="row">
+                        <section class="col-9">
+                            {{stores.name}}<br>
+                            <small>Buy for <i class="fa fa-jpy"></i>{{stores.cost}}</small>
+                        </section>
+                        <section class="col-3">
+                            <span class="md pull-right">{{stores.count}}</span>
+                        </section>
+                    </div>
+                </button>
+            </span>
+        </p>
+    </section>
+</div>
+
+<div class="col-third">
+    <section>
+        <p ng-show="showUpgrade(cardUpgrades, 0)">Step 2: ???</p>
+        <p ng-repeat="upgrades in cardUpgrades">
+            <span class="tooltip_trigger col-11">
+                <span class="tooltip tooltip-bottom tooltip-violet">
+                    <em>{{upgrades.blurb}}</em><br><br>
+                    <!--                              +<i class="fa fa-jpy"></i>{{upgrades.adjustedIncomeRate}}/sec<br>-->
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{upgrades.adjustedCardFlow}} cards/sec<br>
+                    <span ng-show="upgrades.adjustedRareCardRate"><i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>x{{upgrades.adjustedRareCardRate}} chance of rare cards/sec</span>
+                </span>
+                <button class="button button-card col-12"  ng-class="{'disable-button' : checkAffordability(cardUpgrades, $index)}" ng-show="showUpgrade(cardUpgrades, $index)" ng-click="buyUpgrade(cardUpgrades, $index)">
+                    <div class="row">
+                        <section class="col-9">
+                            {{upgrades.name}}<br>
+                            <small>Buy for <i class="fa fa-jpy"></i>{{upgrades.cost}}</small>
+                        </section>
+                        <section class="col-3">
+                            <span class="md pull-right">{{upgrades.count}}</span>
+                        </section>
+                    </div>
+                </button>
+            </span>
+        </p>
+    </section>
+</div>
+  
+<div class="col-third">
+    <section>
+        <p ng-show="showUpgrade(marketingUpgrades, 0)">Step 3: Profit</p>
+        <p ng-repeat="dominate in marketingUpgrades">
+            <span class="tooltip_trigger col-11">
+                <span class="tooltip tooltip-bottom tooltip-violet">
+                    <em>{{dominate.blurb}}</em><br><br>
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>{{dominate.adjustedIncomeRate}}/sec<br>    
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{dominate.adjustedCardFlow}} cards/sec
+                </span>
+                <button class="button button-marketing col-12" ng-class="{'disable-button' : checkAffordability(marketingUpgrades, $index)}" ng-show="showUpgrade(marketingUpgrades, $index)" ng-click="buyUpgrade(marketingUpgrades, $index)">
+                    <div class="row">
+                        <section class="col-9">
+                            {{dominate.name}}<br>
+                            <small>Buy for <i class="fa fa-jpy"></i>{{dominate.cost}}</small>
+                        </section>
+                        <section class="col-3">
+                            <span class="md pull-right">{{dominate.count}}</span>
+                        </section>
+                    </div>
+                </button>
+            </span>
+        </p>
+    </section>
+</div>
+    </div>

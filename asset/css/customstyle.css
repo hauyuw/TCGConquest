@@ -24,7 +24,7 @@ input[type="text"]#gamename {
 }
 
 .achievement-overflow {
-  height: 38rem; 
+  height: 27rem; 
   overflow: auto;
 }
 
@@ -36,7 +36,7 @@ input[type="text"]#gamename {
     background: none;
     line-height: normal;
     padding: 0.5rem;
-    height: 9.5rem;
+    height: 7.5rem;
     border: 1px black;
     border-radius: 0.3rem;
 }
@@ -48,9 +48,11 @@ input[type="text"]#gamename {
     background: gray;
 }
 
-.upgrade-overflow {
-  height: 35rem; 
-  overflow: none;
+.tab-overflow {
+/*  height: 30rem; */
+  height: 61vh;
+  overflow-x: visible;
+  overflow-y: auto;
 }
 
 .disable-button {
