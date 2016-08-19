@@ -38,7 +38,7 @@ angular.module('saveModule')
             var propValue = saveArray[i][searchKey];
             if ((arrayName[i].id == searchKey) && propValue) {
 //                console.log('bringing back achievements');
-                arrayName[i].show = true;
+                arrayName[i].unlocked = true;
             }
         }
     };
