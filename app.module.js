@@ -200,7 +200,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.showAchievement = function(index) {
-        if(achievementService.achievementList[index].show) {
+        if(achievementService.achievementList[index].unlocked) {
             return true;
         }
     };
