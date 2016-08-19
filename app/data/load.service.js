@@ -47,7 +47,7 @@ angular.module('saveModule')
     this.recalculateCost = function(arrayName, index, counts) {
         var nextCost = arrayName[index].cost;
         for (var i = 0; i < counts; i++) {
-            nextCost = Math.floor(arrayName[index].baseCost * Math.pow(arrayName[index].costIncreaseRate, arrayName[index].count));
+            nextCost = Math.floor(nextCost * Math.pow(arrayName[index].costIncreaseRate, i+1));
         }
         return nextCost;
     };

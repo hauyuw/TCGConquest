@@ -3,20 +3,20 @@
     <section>
         <p>Step 1: Sell cards</p>
         <p><span class="tooltip_trigger col-11">
-            <span class="tooltip tooltip-right tooltip-violet">
+            <span class="tooltip tooltip-bottom tooltip-violet">
                 <em>Minimum viable product will ship in 8 months to never</em><br><br>
-                <span class="pull-right">+<i class="fa fa-jpy"></i>10<br>
-                Sells 1 card</span>
+                <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>10<br>
+                <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells 1 card
             </span>
             <button class="button button-retail col-12" ng-click="cardClick()">Crowdfunding</button>
             </span>
         </p>
         <p ng-repeat="stores in retailUpgrades">
             <span class="tooltip_trigger col-11">
-                <span class="tooltip tooltip-right tooltip-violet">
+                <span class="tooltip tooltip-bottom tooltip-violet">
                     <em>{{stores.blurb}}</em><br><br>
-                    <span class="pull-right">+<i class="fa fa-jpy"></i>{{stores.adjustedIncomeRate}}/sec<br>
-                    Sells +{{stores.adjustedCardFlow}} cards/sec</span>
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>{{stores.adjustedIncomeRate}}/sec<br>
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{stores.adjustedCardFlow}} cards/sec
                 </span>
                 <button class="button button-retail col-12" ng-class="{'disable-button' : checkAffordability(retailUpgrades, $index)}" ng-show="showUpgrade(retailUpgrades, $index)" ng-click="buyUpgrade(retailUpgrades, $index)">
                     <div class="row">
@@ -39,11 +39,11 @@
         <p ng-show="showUpgrade(cardUpgrades, 0)">Step 2: ???</p>
         <p ng-repeat="upgrades in cardUpgrades">
             <span class="tooltip_trigger col-11">
-                <span class="tooltip tooltip-right tooltip-violet">
+                <span class="tooltip tooltip-bottom tooltip-violet">
                     <em>{{upgrades.blurb}}</em><br><br>
                     <!--                              +<i class="fa fa-jpy"></i>{{upgrades.adjustedIncomeRate}}/sec<br>-->
-                    <span class="pull-right">Sells +{{upgrades.adjustedCardFlow}} cards/sec<br>
-                    <span ng-show="upgrades.adjustedRareCardRate">x{{upgrades.adjustedRareCardRate}} chance of rare cards/sec</span></span>
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{upgrades.adjustedCardFlow}} cards/sec<br>
+                    <span ng-show="upgrades.adjustedRareCardRate"><i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>x{{upgrades.adjustedRareCardRate}} chance of rare cards/sec</span>
                 </span>
                 <button class="button button-card col-12"  ng-class="{'disable-button' : checkAffordability(cardUpgrades, $index)}" ng-show="showUpgrade(cardUpgrades, $index)" ng-click="buyUpgrade(cardUpgrades, $index)">
                     <div class="row">
@@ -68,8 +68,8 @@
             <span class="tooltip_trigger col-11">
                 <span class="tooltip tooltip-bottom tooltip-violet">
                     <em>{{dominate.blurb}}</em><br><br>
-                    <span class="pull-right">+<i class="fa fa-jpy"></i>{{dominate.adjustedIncomeRate}}/sec<br>    
-                    Sells +{{dominate.adjustedCardFlow}} cards/sec</span>
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>+<i class="fa fa-jpy"></i>{{dominate.adjustedIncomeRate}}/sec<br>    
+                    <i class="fa fa-caret-right fa-fw" aria-hidden="true"></i>Sells +{{dominate.adjustedCardFlow}} cards/sec
                 </span>
                 <button class="button button-marketing col-12" ng-class="{'disable-button' : checkAffordability(marketingUpgrades, $index)}" ng-show="showUpgrade(marketingUpgrades, $index)" ng-click="buyUpgrade(marketingUpgrades, $index)">
                     <div class="row">

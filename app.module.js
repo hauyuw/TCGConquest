@@ -2,27 +2,6 @@
 
 //setting up the AngularJS module
 var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'notificationModule', 'rareCardModule']);
-    
-app.directive('importGame', function($parse) {
-    return {
-        restrict: 'A',
-        scope: false,
-        link: function(scope, element, attrs) {
-            var f = $parse(attrs.importGame);
-            
-            element.on('change', function(onChangeEvent) {
-                var reader = new FileReader();
-                reader.onload = function(onLoadEvent) {
-                    scope.$apply(function() {
-                        f(scope, {$fileContent:onLoadEvent.target.result});
-                    });
-                };
-                
-                reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
-            });
-        }
-    };
-});
 
 //main AngularJS controller for the game 
 app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService',
@@ -104,7 +83,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.nameYourGame = function() {
-        if ($scope.gameName === '' && gameData.gameName === '') {
+        if ($scope.gameName === '') {
             $scope.randomizeGameName();
         } else {
             $scope.gameName = gameData.gameName;
@@ -119,7 +98,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
             gameData.gameName = angular.copy(nameInput);
         }
         closeDialog(starterDialogLoc);
-    };
+    }
       
     $scope.deleteWarning = function() {
         openDialog(deleteDialogLoc);
@@ -140,24 +119,15 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         notificationService.giveStatus('Game saved', 'green');
     };
       
-    $scope.checkContent = function($fileContent) {
-        console.log(JSON.parse(atob($fileContent)));
-    };
-      
-    $scope.loadGame = function(saveFile) {
-//        $scope.sessionStart = $scope.lastTimeStamp.getTime();
+    $scope.loadGame = function() {
+        $scope.sessionStart = $scope.lastTimeStamp.getTime();
         if (!localStorage['tcgconquest_save']) {
             $scope.nameYourGame();
             console.log("game is named");
             return;
         }
-        var save_data;
-        if (saveFile === null) {
-            save_data = JSON.parse(atob(localStorage['tcgconquest_save']));
-        } else {
-            save_data = JSON.parse(atob(saveFile));
-        }
-        console.log(save_data);
+        
+        var save_data = JSON.parse(atob(localStorage['tcgconquest_save']));
         $scope.game = save_data;
         $scope.game.incomeRate = gameData.incomeRate;
         $scope.game.cardFlow = gameData.cardFlow;
@@ -178,9 +148,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         console.log('version ' + config.version);
 //        console.log(retailUpgrades);
 //        console.log(achievementService.achievementList);
-        if (save_data === null) {
-            closeDialog('./app/data/import-dialog.template.html');
-        }
     };
     
     $scope.exportGame = function() {
@@ -188,10 +155,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         var fileName = 'TCGConquestSave_' + saveService.timeStamp() + '.txt';
         $scope.saveGame();
         saveService.exportSave(fileContent, fileName);
-    };
-      
-    $scope.uploadFile = function() {
-        openDialog('./app/data/import-dialog.template.html');
     };
       
     $scope.resetGame = function() {
@@ -282,7 +245,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         setNumDisplays();
     };
     
-    $scope.loadGame(null);
+    $scope.loadGame();
     setNumDisplays();
     $interval($scope.callAtInterval, 1000);
     $interval($scope.saveGame, 500000);

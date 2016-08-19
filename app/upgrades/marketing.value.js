@@ -22,20 +22,20 @@ angular.module('upgradesModule')
         unlockThreshold: 8000,
         costIncreaseRate: 1.2,
         adjustedCardFlow: 0,
-        adjustedIncomeRate: 200,
+        adjustedIncomeRate: 100,
         count: null,
         show: false
     },
     {
         name: 'Saturday Morning Cartoon',
         id: 'M3',
-        blurb: 'Merchandising, merchandising, merchandising!',
+        blurb: 'Merchandising, merchandising, merchandising',
         baseCost: 50000,
         cost: 50000,
         unlockThreshold: 8000,
         costIncreaseRate: 1.2,
         adjustedCardFlow: 0,
-        adjustedIncomeRate: 500,
+        adjustedIncomeRate: 200,
         count: null,
         show: false
     },
@@ -48,7 +48,7 @@ angular.module('upgradesModule')
         unlockThreshold: 8000,
         costIncreaseRate: 1.2,
         adjustedCardFlow: 0,
-        adjustedIncomeRate: 700,
+        adjustedIncomeRate: 200,
         count: null,
         show: false
     },

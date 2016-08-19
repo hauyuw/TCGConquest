@@ -52,12 +52,11 @@
       <br>
       <div class="wrapper">
           <div class="row">
-              <section class="col-4">
+              <section class="col-3">
                   <div class="row"><span class="md"><em>{{game.gameName}}</em></span><br></div>
                   <div class="row"><span class="xxs">Your TCG taking the world by storm</span></div>
-                  <div class="row"><a href="" ng-click="saveGame()">Save</a></div>
               </section>
-              <section class="col-5">
+              <section class="col-6">
                   <p>
                       <span class="rg"><i class="fa fa-jpy"></i>{{incomeDisplay}}</span><br>
                       <span class="xxs"><i class="fa fa-jpy"></i>{{incomeRateDisplay}} per second</span></p>
@@ -73,24 +72,19 @@
                   <span class="progresslabel">Label</span></p>
 -->
                   <span ng-show="checkRareCardCount()"><i class="fa fa-star-o fa-fw"></i>Rare cards: {{game.rareCardCount}}</span>
+<!--                  <a ng-click="">Invest</a>-->
                   <p ng-show="momentum"><i class="fa fa-refresh fa-fw"></i>Momentum: </p>
               </section>
           </div>
           <div class="row">
             <ul class="tabs col-12" id="nav" data-ks-tabs>
                 <li class="open"><a href="#upgrades">Upgrades</a></li>
-                <li ng-show="checkRareCardCount()"><a href="#investments">Investments</a></li>
                 <li><a href="#achievements">Achievements</a></li>
                 <li><a href="#settings">Settings</a></li>
             </ul>
             <div class="tab_pane_container col-12">
                 <article id="upgrades">
                     <upgrades></upgrades>
-                </article>
-                <article id="investments">
-                    <div class="row tab-overflow">
-                        
-                    </div>
                 </article>
                 <article id="achievements">
                     <achievements></achievements>
