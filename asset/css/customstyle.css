@@ -1,3 +1,7 @@
+body {
+    background: #fdfdfd;
+/*  background: #DAF0EE;*/
+}
 /*
 .button-retail{background-color:#58AA00;border-color:#58AA00;color:#fff} 
 .button-retail.open{background-color:#4b9000}
@@ -36,9 +40,10 @@ input[type="text"]#gamename {
     background: none;
     line-height: normal;
     padding: 0.5rem;
-    height: 7.5rem;
+    height: 12rem;
     border: 1px black;
     border-radius: 0.3rem;
+    margin-bottom: 1rem;
 }
 .have {
     background: gold;

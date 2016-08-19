@@ -12,7 +12,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'clicks',
             numCriteria: 1,
-            show: false
+            unlocked: false
         },
         {
             name: '',
@@ -22,7 +22,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'clicks',
             numCriteria: 100,
-            show: false
+            unlocked: false
         },
         {
             name: '',
@@ -32,7 +32,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'clicks',
             numCriteria: 1000,
-            show: false
+            unlocked: false
         },
         {
             name: 'Speed World',
@@ -42,7 +42,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'cardsSold',
             numCriteria: 98542,
-            show: false
+            unlocked: false
         },
         {
             name: 'Around The World...',
@@ -52,7 +52,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'cardsSold',
             numCriteria: 465988372,
-            show: false
+            unlocked: false
         },
         {
             name: 'One Small Step for Man',
@@ -62,7 +62,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'cardsSold',
             numCriteria: 4522000000,
-            show: false
+            unlocked: false
         },
         {
             name: 'Brave New World',
@@ -72,7 +72,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'cardsSold',
             numCriteria: 642350000000,
-            show: false
+            unlocked: false
         },
         {
             name: 'Path to the Stars',
@@ -82,7 +82,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'cardsSold',
             numCriteria: 1764700000000,
-            show: false
+            unlocked: false
         },
         {
             name: 'King of the Playground',
@@ -92,7 +92,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'retailUpgrades',
             dataIDToCheck: 'R1',
             numCriteria: 50,
-            show: false
+            unlocked: false
         },
         {
             name: "I Don't Wanna Grow Up",
@@ -102,7 +102,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'retailUpgrades',
             dataIDToCheck: 'R3',
             numCriteria: 100,
-            show: false
+            unlocked: false
         },
         {
             name: 'Diversification',
@@ -112,7 +112,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'marketingUpgrades',
             dataIDToCheck: 'M1',
             numCriteria: 1,
-            show: false
+            unlocked: false
         },
         {
             name: 'First In Class',
@@ -122,7 +122,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'marketingUpgrades',
             dataIDToCheck: 'M5',
             numCriteria: 1,
-            show: false
+            unlocked: false
         },
         {
             name: 'One of a Kind',
@@ -132,7 +132,7 @@ angular.module('achievementModule')
             dataPieceToCheck: 'gameData',
             dataIDToCheck: 'totalRareCards',
             numCriteria: 1,
-            show: false
+            unlocked: false
         },
         {
             name: 'My Precious...',
@@ -140,9 +140,9 @@ angular.module('achievementModule')
             blurb: '',
             id: 'A14',
             dataPieceToCheck: 'gameData',
-            dataIDToCheck: 'totalRareCards',
+            dataIDToCheck: 'rareCardCount',
             numCriteria: 1000,
-            show: false
+            unlocked: false
         },
     ];
     this.count = this.achievementList.length;
@@ -152,7 +152,7 @@ angular.module('achievementModule')
     this.checkEarned = function() {
         this.earnedCount = 0;
         for (var i = 0; i < this.achievementList.length; i++) {
-            if (this.achievementList[i].show) {
+            if (this.achievementList[i].unlocked) {
                 this.earnedCount++;
             }
         }
@@ -186,32 +186,32 @@ angular.module('achievementModule')
     this.checkAchievementStatus = function (location1, location2, location3, location4) {
         var newCount = 0;
         for (var i = 0; i < this.achievementList.length; i++) {
-            if (this.achievementList[i].show === false) {
+            if (this.achievementList[i].unlocked === false) {
                 switch (this.achievementList[i].dataPieceToCheck) {
                     case 'gameData':
                         if (this.checkAchievementCriteria1(location1, i)) {
-                            this.achievementList[i].show = true;
+                            this.achievementList[i].unlocked = true;
                             newCount++;
                             notificationService.giveStatus('You got ' + newCount + ' new achievement!', 'yellow');
                         }
                         break;
                     case 'retailUpgrades': 
                         if (this.checkAchievementCriteria2(location2, i)) {
-                            this.achievementList[i].show = true;
+                            this.achievementList[i].unlocked = true;
                             newCount++;
                             notificationService.giveStatus('You got ' + newCount + ' new achievement!', 'yellow');
                         }
                         break;
                     case 'cardUpgrades':
                         if (this.checkAchievementCriteria2(location3, i)) {
-                            this.achievementList[i].show = true;
+                            this.achievementList[i].unlocked = true;
                             newCount++;
                             notificationService.giveStatus('You got ' + newCount + ' new achievement!', 'yellow');
                         }
                         break;
                     case 'marketingUpgrades':
                         if (this.checkAchievementCriteria2(location4, i)) {
-                            this.achievementList[i].show = true;
+                            this.achievementList[i].unlocked = true;
                             newCount++;
                             notificationService.giveStatus('You got ' + newCount + ' new achievement!', 'yellow');
                         }
