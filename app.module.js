@@ -4,8 +4,8 @@
 var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'notificationModule', 'rareCardModule']);
 
 //main AngularJS controller for the game 
-app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService',
-  function($scope, $interval, ngDialog, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService) {
+app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService',
+  function($scope, $interval, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService) {
     $scope.game = gameData;
     $scope.retailUpgrades = retailUpgrades;
     $scope.cardUpgrades = cardUpgrades;
@@ -49,7 +49,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
     //TO DO: MOVE INTO ITS OWN SERVICE
     var openDialog = function(location) {
          ngDialog.open({ 
-            template: location,
+             template: location,
              className: 'ngdialog-theme-default',
              closeByEscape: false,
              closeByDocument: false,
@@ -62,6 +62,17 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
             template: location,
             className: 'ngdialog-theme-default',
         });
+    };
+      
+    $scope.debugLog = function() {
+        ngDialog.open({ 
+             template: 'version: ' + config.version + '<br>game name: ' + gameData.gameName + '<br>clicks: ' + gameData.clicks,
+             plain: true
+         });
+        var fileContent = JSON.stringify(gameData);
+        var fileName = 'TCGConquestSave_Debug' + saveService.timeStamp() + '.txt';
+        $scope.saveGame();
+        saveService.exportSave(fileContent, fileName);
     };
       
     $scope.randomizeGameName = function() {
@@ -134,7 +145,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         if(gameData.gameName === '') {
             $scope.nameYourGame();
         }
-        console.log('version ' + gameData.version);
+        console.log('version ' + config.version);
 //        console.log(retailUpgrades);
 //        console.log(achievementService.achievementList);
     };
@@ -156,11 +167,11 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
     $scope.cardClick = function() {
         gameData.cardsSold++;
         gameData.clicks++;
-        gameData.income += 10;
+        gameData.income += config.basicClicker;
         upgradeService.checkAvailability(retailUpgrades, gameData);
         upgradeService.checkAvailability(cardUpgrades, gameData);
         upgradeService.checkAvailability(marketingUpgrades, gameData);
-        achievementService.checkAchievementStatus();
+        achievementService.checkAchievementStatus(gameData, retailUpgrades, cardUpgrades, marketingUpgrades);
         setNumDisplays();
 //        rollForRareCard();
     };
@@ -169,7 +180,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         if (gameData.income >= arrayName[index].cost) {
             if (arrayName[index].id === 'C1') {
                 arrayName[index].blurb = 'Previewing this summer: "' + generateRandomBoosterName.shuffle() + '"';
-        }
+            }
             
             arrayName[index].count++;
             gameData.income -= arrayName[index].cost;
@@ -183,13 +194,13 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
             
             gameData.cardFlow = numberService.tidyUpNum(gameData.cardFlow);
             gameData.incomeRate = numberService.tidyUpNum(gameData.incomeRate);
-            achievementService.checkAchievementStatus();
+            achievementService.checkAchievementStatus(gameData, retailUpgrades, cardUpgrades, marketingUpgrades);
             setNumDisplays();
         }
     };
       
     $scope.showAchievement = function(index) {
-        if(achievementService.achievementList[index].show) {
+        if(achievementService.achievementList[index].unlocked) {
             return true;
         }
     };
@@ -221,7 +232,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         upgradeService.checkAvailability(cardUpgrades, gameData);
         upgradeService.checkAvailability(marketingUpgrades, gameData);
         rareCardService.rollForRareCard(gameData);
-        achievementService.checkAchievementStatus();
         
 //        console.log("doing the math of cards");
         gameData.cardsSold += gameData.cardFlow;
@@ -231,6 +241,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'gameData',
         gameData.income = numberService.tidyUpNum(gameData.income);
         gameData.incomeRate = numberService.tidyUpNum(gameData.incomeRate);
         updateSessionLength();
+        achievementService.checkAchievementStatus(gameData, retailUpgrades, cardUpgrades, marketingUpgrades);
         setNumDisplays();
     };
     

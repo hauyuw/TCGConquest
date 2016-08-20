@@ -1,1 +1,1 @@
-angular.module('achievementModule', ['saveModule', 'upgradeModules', 'notificationModule']);
+angular.module('achievementModule', ['notificationModule']);
