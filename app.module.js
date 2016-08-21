@@ -2,27 +2,6 @@
 
 //setting up the AngularJS module
 var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'notificationModule', 'rareCardModule']);
-    
-app.directive('importGame', function($parse) {
-    return {
-        restrict: 'A',
-        scope: false,
-        link: function(scope, element, attrs) {
-            var f = $parse(attrs.importGame);
-            
-            element.on('change', function(onChangeEvent) {
-                var reader = new FileReader();
-                reader.onload = function(onLoadEvent) {
-                    scope.$apply(function() {
-                        f(scope, {$fileContent:onLoadEvent.target.result});
-                    });
-                };
-                
-                reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
-            });
-        }
-    };
-});
 
 //main AngularJS controller for the game 
 app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService',
@@ -84,6 +63,12 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
             className: 'ngdialog-theme-default',
         });
     };
+    $scope.closeDialog = function(location) {
+        ngDialog.close({ 
+            template: location,
+            className: 'ngdialog-theme-default',
+        });
+    };
       
     $scope.debugLog = function() {
         ngDialog.open({ 
@@ -135,13 +120,15 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         saveService.convertUpgrades(marketingUpgrades, gameData.marketing_upgrades);
         saveService.convertAchievements(achievementService.achievementList, gameData.achievements);
         updateSessionLength();
-        localStorage['tcgconquest_save'] = btoa(JSON.stringify(gameData));
+        localStorage['tcgconquest_save'] = LZString.compressToBase64(JSON.stringify(gameData));
         ga('send', 'event', 'TCGConquest', 'Save');
         notificationService.giveStatus('Game saved', 'green');
     };
       
-    $scope.checkContent = function($fileContent) {
-        console.log(JSON.parse(atob($fileContent)));
+    $scope.checkContent = function() {
+        var test = JSON.parse(LZString.decompressFromBase64(document.getElementById('importbox').value));
+        console.log(document.getElementById('importbox').value);
+        console.log(test + ' , type: ' + typeof test);
     };
       
     $scope.loadGame = function(saveFile) {
@@ -153,15 +140,17 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         }
         var save_data;
         if (saveFile === null) {
-            save_data = JSON.parse(atob(localStorage['tcgconquest_save']));
+            save_data = JSON.parse(LZString.decompressFromBase64(localStorage['tcgconquest_save']));
         } else {
-            save_data = JSON.parse(atob(saveFile));
+//            $scope.checkContent();
+            save_data = JSON.parse(LZString.decompressFromBase64(document.getElementById('importbox').value));
+            closeDialog('./app/data/import-dialog.template.html');
         }
-        console.log(save_data);
+//        console.log(save_data);
         $scope.game = save_data;
-        $scope.game.incomeRate = gameData.incomeRate;
-        $scope.game.cardFlow = gameData.cardFlow;
-        $scope.game.rareCardRate = gameData.rareCardRate;
+//        $scope.game.incomeRate = gameData.incomeRate;
+//        $scope.game.cardFlow = gameData.cardFlow;
+//        $scope.game.rareCardRate = gameData.rareCardRate;
         loadService.reconvertUpgrades(retailUpgrades, $scope.game.retail_upgrades, $scope.game);
         loadService.reconvertUpgrades(cardUpgrades, $scope.game.card_upgrades, $scope.game);
         loadService.reconvertUpgrades(marketingUpgrades, $scope.game.marketing_upgrades, $scope.game);
@@ -178,13 +167,10 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         console.log('version ' + config.version);
 //        console.log(retailUpgrades);
 //        console.log(achievementService.achievementList);
-        if (save_data === null) {
-            closeDialog('./app/data/import-dialog.template.html');
-        }
     };
     
     $scope.exportGame = function() {
-        var fileContent = btoa(JSON.stringify(gameData));
+        var fileContent = LZString.compressToBase64(JSON.stringify(gameData));
         var fileName = 'TCGConquestSave_' + saveService.timeStamp() + '.txt';
         $scope.saveGame();
         saveService.exportSave(fileContent, fileName);

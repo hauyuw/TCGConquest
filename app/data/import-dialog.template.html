@@ -1,9 +1,16 @@
 <div class="ngdialog-theme-default">
     <div class="row">Import a save file from your computer<br><br></div>
-    <div class="row">
-        <form name="upload">
-            <input type="file" name="save-file" import-game="checkContent($fileContent)">
-            <button class="button button-green" ng-click="loadGame($fileContent)">Import Game</button>
-        </form>
-    </div>
+    <form name="upload">
+        <div class="row">
+            <textarea rows="10" cols="100" placeholder="Paste the content of your save file here" id="importbox"></textarea>
+            <br><br>
+        </div>
+        <div class="row">
+            <div class="col-third"><button class="button button-red" ng-click="closeDialog('./app/data/import-dialog.template.html')">Cancel</button></div>
+            <div class="col-third"></div>
+            <div class="col-third">
+                <button class="button button-green" ng-click="loadGame(document.getElementById('importbox').value)">Import Game</button>
+            </div>
+        </div>
+    </form>
 </div>
