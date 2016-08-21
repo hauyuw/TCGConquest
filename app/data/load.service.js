@@ -69,6 +69,32 @@ angular.module('saveModule')
         gameSaveFile.cardFlow += rebalanceCardFlow;
     };
     
+    //check save file data validity; can it be decompressed from base64? can it be parsed?
+    this.importServices = function(dataFile) {
+        //check to make sure that the file format entered matches
+        if (!dataFile) {
+            console.warn('You attempted to load an invalid game state. Please try again with data from a valid file.');
+            return false;
+        }
+        
+        try {
+            LZString.decompressFromBase64(dataFile);
+        } catch(e) {
+            console.error('Could not decompress string');
+            return false;
+        }
+        
+        try {
+            JSON.parse(LZString.decompressFromBase64(dataFile));
+        } catch(e) {
+            console.error('Could not parse data. Try again.');
+            return false;
+        }
+        
+        console.log('Valid game state was given');
+        return true;
+    };
+    
 });
     
 

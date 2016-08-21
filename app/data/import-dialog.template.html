@@ -1,0 +1,19 @@
+<div class="ngdialog-theme-default">
+    <div class="row">Import a save file from your computer<br><br></div>
+    <form name="upload">
+        <div class="row">
+            <textarea rows="10" cols="100" placeholder="Paste the content of your save file here" id="importbox" required></textarea>
+        </div>
+        <div class="row">{{error}}</div>
+        <div class="row"></div>
+        <div class="row">
+            <div class="col-third">
+                <button class="button button-red" ng-click="closeWarning()">Cancel</button>
+            </div>
+            <div class="col-third"></div>
+            <div class="col-third">
+                <button class="button button-green" ng-click="loadGame(document.getElementById('importbox').value)">Import Game</button>
+            </div>
+        </div>
+    </form>
+</div>
