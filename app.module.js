@@ -83,7 +83,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.nameYourGame = function() {
-        if ($scope.gameName === '') {
+        if ($scope.gameName === '' && gameData.gameName === '') {
             $scope.randomizeGameName();
         } else {
             $scope.gameName = gameData.gameName;
@@ -98,7 +98,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
             gameData.gameName = angular.copy(nameInput);
         }
         closeDialog(starterDialogLoc);
-    }
+    };
       
     $scope.deleteWarning = function() {
         openDialog(deleteDialogLoc);
@@ -106,6 +106,8 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
       
     $scope.closeWarning = function() {
         closeDialog(deleteDialogLoc);
+        $scope.error = '';
+        closeDialog('./app/data/import-dialog.template.html');
      };
       
     $scope.saveGame = function() {
@@ -114,24 +116,42 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         saveService.convertUpgrades(marketingUpgrades, gameData.marketing_upgrades);
         saveService.convertAchievements(achievementService.achievementList, gameData.achievements);
         updateSessionLength();
-        localStorage['tcgconquest_save'] = btoa(JSON.stringify(gameData));
+        localStorage['tcgconquest_save'] = LZString.compressToBase64(JSON.stringify(gameData));
         ga('send', 'event', 'TCGConquest', 'Save');
         notificationService.giveStatus('Game saved', 'green');
     };
       
-    $scope.loadGame = function() {
-        $scope.sessionStart = $scope.lastTimeStamp.getTime();
+    $scope.checkContent = function() {
+        var test = JSON.parse(LZString.decompressFromBase64(document.getElementById('importbox').value));
+        console.log(document.getElementById('importbox').value);
+        console.log(test + ' , type: ' + typeof test);
+    };
+      
+    $scope.loadGame = function(saveFile) {
+//        $scope.sessionStart = $scope.lastTimeStamp.getTime();
         if (!localStorage['tcgconquest_save']) {
             $scope.nameYourGame();
             console.log("game is named");
             return;
         }
-        
-        var save_data = JSON.parse(atob(localStorage['tcgconquest_save']));
+        var save_data;
+        if (saveFile === null) {
+            save_data = JSON.parse(LZString.decompressFromBase64(localStorage['tcgconquest_save']));
+        } else {
+//            $scope.checkContent();
+            save_data = document.getElementById('importbox').value;
+            
+            if (!loadService.importServices(save_data)) {
+                $scope.error = 'You attempted to load an invalid game state. Please try again with data from a valid file.';
+                return;
+            }
+            save_data = JSON.parse(LZString.decompressFromBase64(document.getElementById('importbox').value));
+        }
+//        console.log(save_data);
         $scope.game = save_data;
-        $scope.game.incomeRate = gameData.incomeRate;
-        $scope.game.cardFlow = gameData.cardFlow;
-        $scope.game.rareCardRate = gameData.rareCardRate;
+//        $scope.game.incomeRate = gameData.incomeRate;
+//        $scope.game.cardFlow = gameData.cardFlow;
+//        $scope.game.rareCardRate = gameData.rareCardRate;
         loadService.reconvertUpgrades(retailUpgrades, $scope.game.retail_upgrades, $scope.game);
         loadService.reconvertUpgrades(cardUpgrades, $scope.game.card_upgrades, $scope.game);
         loadService.reconvertUpgrades(marketingUpgrades, $scope.game.marketing_upgrades, $scope.game);
@@ -145,20 +165,25 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         if(gameData.gameName === '') {
             $scope.nameYourGame();
         }
+        $scope.closeWarning();
         console.log('version ' + config.version);
 //        console.log(retailUpgrades);
 //        console.log(achievementService.achievementList);
     };
     
     $scope.exportGame = function() {
-        var fileContent = btoa(JSON.stringify(gameData));
+        var fileContent = LZString.compressToBase64(JSON.stringify(gameData));
         var fileName = 'TCGConquestSave_' + saveService.timeStamp() + '.txt';
         $scope.saveGame();
         saveService.exportSave(fileContent, fileName);
     };
       
+    $scope.uploadFile = function() {
+        openDialog('./app/data/import-dialog.template.html');
+    };
+      
     $scope.resetGame = function() {
-        console.log("deleting");
+        console.warn("deleting");
         localStorage.clear();
         window.location.reload(true);
     };
@@ -173,7 +198,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         upgradeService.checkAvailability(marketingUpgrades, gameData);
         achievementService.checkAchievementStatus(gameData, retailUpgrades, cardUpgrades, marketingUpgrades);
         setNumDisplays();
-//        rollForRareCard();
     };
     
     $scope.buyUpgrade = function(arrayName, index) {    
@@ -233,7 +257,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         upgradeService.checkAvailability(marketingUpgrades, gameData);
         rareCardService.rollForRareCard(gameData);
         
-//        console.log("doing the math of cards");
+        // doing the math of cards
         gameData.cardsSold += gameData.cardFlow;
         gameData.cardsSold = Math.round(gameData.cardsSold);
         gameData.cardFlow = numberService.tidyUpNum(gameData.cardFlow);
@@ -245,7 +269,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         setNumDisplays();
     };
     
-    $scope.loadGame();
+    $scope.loadGame(null);
     setNumDisplays();
     $interval($scope.callAtInterval, 1000);
     $interval($scope.saveGame, 500000);
