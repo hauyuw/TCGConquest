@@ -1,8 +1,23 @@
 <div class="row tab-overflow">
-    <section>
-    <p><a href="" ng-click="exportGame()">Export save file</a> / <a href="" ng-click="loadGame()">Import save file</a></p>
-    <p><a href="" ng-click="nameYourGame()">Change your TCG's name</a></p>
-    <p><a href="" ng-click="deleteWarning()">Clear save file</a></p>
-    <p><a href="" ng-click="debugLog()">Debug</a></p>
-    </section>
+    <div class="col-half">
+        <header class="page-header">
+            <h5>Game Options</h5>
+        </header>
+        <ul class="list list-unstyled">
+            <li><button class="button button-small" ng-click="nameYourGame()">Change your TCG's name</button></li>
+        </ul>
+    </div>
+    <div class="col-half">
+        <header class="page-header">
+            <h5>Save Options</h5>
+        </header>
+        <ul class="list list-unstyled">
+            <li>
+                <button class="button button-small" ng-click="exportGame()" style="margin-right: 4vw;">Export save file</button>
+                <button class="button button-small" ng-click="uploadFile()">Import save file</button>
+            </li>
+            <li><button class="button button-small button-red" ng-click="deleteWarning()">Clear save file</button></li>
+        </ul>
+<!--    <a href="" ng-click="debugLog()">Debug</a>-->
+    </div>
 </div>

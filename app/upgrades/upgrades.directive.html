@@ -1,9 +1,9 @@
 <div class="row tab-overflow">
-<div class="col-third">
+<div class="col-4">
     <section>
-        <p>Step 1: Sell cards</p>
+        <h6>Step 1: Sell cards</h6>
         <p><span class="tooltip_trigger col-11">
-            <span class="tooltip tooltip-right tooltip-violet">
+            <span class="tooltip tooltip-bottom tooltip-violet">
                 <em>Minimum viable product will ship in 8 months to never</em><br><br>
                 <span class="pull-right">+<i class="fa fa-jpy"></i>10<br>
                 Sells 1 card</span>
@@ -13,7 +13,7 @@
         </p>
         <p ng-repeat="stores in retailUpgrades">
             <span class="tooltip_trigger col-11">
-                <span class="tooltip tooltip-right tooltip-violet">
+                <span class="tooltip tooltip-bottom tooltip-violet">
                     <em>{{stores.blurb}}</em><br><br>
                     <span class="pull-right">+<i class="fa fa-jpy"></i>{{stores.adjustedIncomeRate}}/sec<br>
                     Sells +{{stores.adjustedCardFlow}} cards/sec</span>
@@ -34,12 +34,12 @@
     </section>
 </div>
 
-<div class="col-third">
+<div class="col-4">
     <section>
-        <p ng-show="showUpgrade(cardUpgrades, 0)">Step 2: ???</p>
+        <h6 ng-show="showUpgrade(cardUpgrades, 0)">Step 2: ???</h6>
         <p ng-repeat="upgrades in cardUpgrades">
             <span class="tooltip_trigger col-11">
-                <span class="tooltip tooltip-right tooltip-violet">
+                <span class="tooltip tooltip-bottom tooltip-violet">
                     <em>{{upgrades.blurb}}</em><br><br>
                     <!--                              +<i class="fa fa-jpy"></i>{{upgrades.adjustedIncomeRate}}/sec<br>-->
                     <span class="pull-right">Sells +{{upgrades.adjustedCardFlow}} cards/sec<br>
@@ -61,9 +61,9 @@
     </section>
 </div>
   
-<div class="col-third">
+<div class="col-4">
     <section>
-        <p ng-show="showUpgrade(marketingUpgrades, 0)">Step 3: Profit</p>
+        <h6 ng-show="showUpgrade(marketingUpgrades, 0)">Step 3: Profit</h6>
         <p ng-repeat="dominate in marketingUpgrades">
             <span class="tooltip_trigger col-11">
                 <span class="tooltip tooltip-bottom tooltip-violet">
