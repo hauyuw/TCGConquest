@@ -16,6 +16,16 @@ body {
 .button-marketing{background-color:#8b008b;border-color:#8b008b;color:#fff}
 .button-marketing.open{background-color:#720071}
 */
+.button-right {
+    position: absolute;
+    bottom: 1rem;
+    right: 4rem;
+}
+.button-left {
+    position: absolute;
+    bottom: 1rem;
+    left: 4rem;
+}
 input[type="text"]#gamename {
   background: none;
   text-align: center;
@@ -27,9 +37,25 @@ input[type="text"]#gamename {
   transition: border 0.3s;
 }
 
+.page-heading {
+  @include page-heading();
+}
+
 .achievement-overflow {
-  height: 27rem; 
+/*  height: 27rem; */
+  height: 56vh; 
   overflow: auto;
+}
+
+@media screen and (min-width: 360px) {      
+    .card-style {
+        width: 9em;
+        height: 10em;
+    }
+}
+
+.label {
+    border-radius: 20px;
 }
 
 .card-style {
@@ -46,11 +72,12 @@ input[type="text"]#gamename {
     margin-bottom: 1rem;
 }
 .have {
-    background: gold;
+    background-color: gold;
 }
 .donothave {
-    color: white;
-    background: gray;
+/*    color: white;*/
+    background-color: lightgrey;
+    box-shadow: inset 1px 1px 3px 1px grey;
 }
 
 .tab-overflow {

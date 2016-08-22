@@ -43,7 +43,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         $scope.sessionLength = elapsedTime;
         $scope.lastTimeStamp = currentTime;
         gameData.duration += $scope.sessionLength;
-        console.log('game has been running for ' + gameData.duration/60000 + ' minutes');
     };
     
     //TO DO: MOVE INTO ITS OWN SERVICE
@@ -111,6 +110,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
      };
       
     $scope.saveGame = function() {
+        console.log('game has been running for ' + gameData.duration/60000 + ' minutes');
         saveService.convertUpgrades(retailUpgrades, gameData.retail_upgrades);
         saveService.convertUpgrades(cardUpgrades, gameData.card_upgrades);
         saveService.convertUpgrades(marketingUpgrades, gameData.marketing_upgrades);
