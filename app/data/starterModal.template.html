@@ -6,12 +6,8 @@
         <span class="error" ng-show="start.gamename.$error.ngMaxlength">Try something shorter.</span><br><br>
         </center>
         <div class="row">
-        <section class="col-half">
-            <button class="button button-blue xs" ng-click="randomizeGameName()">Randomize Name</button>
-        </section>
-        <section class="col-half">
-            <button class="button button-green pull-right xs" role="button" ng-click="namingGame(gameName)">Let's Play</button>
-        </section>
-            </div>
+            <button class="button button-blue button-left xs" ng-click="randomizeGameName()">Randomize Name</button>
+            <button class="button button-green button-right xs" role="button" ng-click="namingGame(gameName)">Let's Play</button>
+        </div>
     </form>
 </div>
