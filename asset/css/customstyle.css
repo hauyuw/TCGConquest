@@ -73,9 +73,9 @@ input[type="text"]#gamename {
 }
 .have {
     background-color: gold;
+    box-shadow: 1px 1px 3px 1px grey;
 }
 .donothave {
-/*    color: white;*/
     background-color: lightgrey;
     box-shadow: inset 1px 1px 3px 1px grey;
 }
