@@ -2,7 +2,7 @@ angular.module('saveModule', [])
     //store game data and variables
     .value('config', {
     version: '0.5',
-    basicClicker: 10,  //income from clicking the basic clicker
+    basicClicker: 10  //income from clicking the basic clicker
 })
     .value('gameData', {
     gameName: '',
@@ -11,7 +11,6 @@ angular.module('saveModule', [])
     cardFlow: 0,
     income: 0,
     incomeRate: 0,
-//    rareCardRate: 1,
     rareCardRate: 0.000000002,
     rareCardCount: 0,
     totalRareCards: 0,
@@ -21,5 +20,5 @@ angular.module('saveModule', [])
     retail_upgrades: [],
     card_upgrades: [],
     marketing_upgrades: [],
-    achievements: [],
+    achievements: []
 });

@@ -91,7 +91,7 @@ angular.module('saveModule')
             return false;
         }
         
-        console.log('Valid game state was given');
+//        console.log('Valid game state was given');
         return true;
     };
     

@@ -21,10 +21,10 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     var starterDialogLoc = './app/data/starterModal.template.html';
       
     //data binding for achievementService variables
-    $scope.$watch( function () { return achievementService.count; }, function(count) {
+    $scope.$watch(function() { return achievementService.count; }, function(count) {
         $scope.count = count;
     });
-    $scope.$watch( function () { return achievementService.earnedCount;}, function(earnedCount) {
+    $scope.$watch(function() { return achievementService.earnedCount; }, function(earnedCount) {
         $scope.earnedCount = earnedCount;
     });
       
@@ -108,7 +108,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         $scope.error = '';
         closeDialog('./app/data/import-dialog.template.html');
      };
-      
+    
     $scope.saveGame = function() {
         console.log('game has been running for ' + gameData.duration/60000 + ' minutes');
         saveService.convertUpgrades(retailUpgrades, gameData.retail_upgrades);
@@ -128,7 +128,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.loadGame = function(saveFile) {
-//        $scope.sessionStart = $scope.lastTimeStamp.getTime();
         if (!localStorage['tcgconquest_save']) {
             $scope.nameYourGame();
             console.log("game is named");
@@ -138,7 +137,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         if (saveFile === null) {
             save_data = JSON.parse(LZString.decompressFromBase64(localStorage['tcgconquest_save']));
         } else {
-//            $scope.checkContent();
             save_data = document.getElementById('importbox').value;
             
             if (!loadService.importServices(save_data)) {
@@ -147,16 +145,21 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
             }
             save_data = JSON.parse(LZString.decompressFromBase64(document.getElementById('importbox').value));
         }
-//        console.log(save_data);
-        $scope.game = save_data;
-//        $scope.game.incomeRate = gameData.incomeRate;
-//        $scope.game.cardFlow = gameData.cardFlow;
-//        $scope.game.rareCardRate = gameData.rareCardRate;
+        
+        //only import values for matching keys between the save file and the current save file structure; prevents breakdown in case of new object properties added
+        var fileStructure = Object.keys(save_data);
+        fileStructure.forEach(function(prop) {
+            if ($scope.game.hasOwnProperty(prop)) {
+                $scope.game[prop] = save_data[prop];
+            }
+        });
+        
         loadService.reconvertUpgrades(retailUpgrades, $scope.game.retail_upgrades, $scope.game);
         loadService.reconvertUpgrades(cardUpgrades, $scope.game.card_upgrades, $scope.game);
         loadService.reconvertUpgrades(marketingUpgrades, $scope.game.marketing_upgrades, $scope.game);
         loadService.reconvertAchievements(achievementService.achievementList, $scope.game.achievements);
         gameData = $scope.game;
+        
         upgradeService.checkAvailability(retailUpgrades, gameData);
         upgradeService.checkAvailability(cardUpgrades, gameData);
         upgradeService.checkAvailability(marketingUpgrades, gameData);
@@ -167,8 +170,6 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         }
         $scope.closeWarning();
         console.log('version ' + config.version);
-//        console.log(retailUpgrades);
-//        console.log(achievementService.achievementList);
     };
     
     $scope.exportGame = function() {
@@ -183,7 +184,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.resetGame = function() {
-        console.warn("deleting");
+        console.warn("deleting your game");
         localStorage.clear();
         window.location.reload(true);
     };
