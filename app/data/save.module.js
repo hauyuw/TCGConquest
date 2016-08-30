@@ -2,6 +2,7 @@ angular.module('saveModule', [])
     //store game data and variables
     .value('config', {
     version: '0.5',
+    tickInterval: 150,  //how often the game increments in milliseconds
     basicClicker: 10  //income from clicking the basic clicker
 })
     .value('gameData', {
@@ -16,7 +17,7 @@ angular.module('saveModule', [])
     totalRareCards: 0,
     soul: 0,
     momentum: 0,
-    duration: 0, //length that the game has been played in ms
+    duration: 0,  //length that the game has been played in milliseconds
     retail_upgrades: [],
     card_upgrades: [],
     marketing_upgrades: [],

@@ -259,10 +259,10 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         rareCardService.rollForRareCard(gameData);
         
         // doing the math of cards
-        gameData.cardsSold += gameData.cardFlow;
+        gameData.cardsSold += (gameData.cardFlow/(1000/config.tickInterval));
         gameData.cardsSold = Math.round(gameData.cardsSold);
         gameData.cardFlow = numberService.tidyUpNum(gameData.cardFlow);
-        gameData.income += gameData.incomeRate;
+        gameData.income += (gameData.incomeRate/(1000/config.tickInterval));
         gameData.income = numberService.tidyUpNum(gameData.income);
         gameData.incomeRate = numberService.tidyUpNum(gameData.incomeRate);
         updateSessionLength();
@@ -272,7 +272,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     
     $scope.loadGame(null);
     setNumDisplays();
-    $interval($scope.callAtInterval, 1000);
+    $interval($scope.callAtInterval, config.tickInterval);
     $interval($scope.saveGame, 500000);
 }]);
     

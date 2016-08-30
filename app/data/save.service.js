@@ -20,7 +20,7 @@ angular.module('saveModule')
     this.convertAchievements = function(arrayName, saveArray) {
         for (var i = 0; i < arrayName.length; i++) {
             var keyName = arrayName[i].id;
-            var keyValue = arrayName[i].show;
+            var keyValue = arrayName[i].unlocked;
             var obj = {};
             obj[keyName] = keyValue;
             saveArray[i] = obj;
