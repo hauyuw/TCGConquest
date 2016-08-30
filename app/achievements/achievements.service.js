@@ -138,7 +138,7 @@ angular.module('achievementModule')
                         break;
                     }
                 }
-                console.log(check1 + " " + check2 + " " + check3);
+//                console.log(check1 + " " + check2 + " " + check3);
                 return (check1 && check2 && check3) ? true : false;
 //                if (check1 && check2 && check3) {
 //                    return true;

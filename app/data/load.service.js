@@ -37,8 +37,9 @@ angular.module('saveModule')
             var searchKey = Object.getOwnPropertyNames(saveArray[i]);
             var propValue = saveArray[i][searchKey];
             if ((arrayName[i].id == searchKey) && propValue) {
-//                console.log('bringing back achievements');
                 arrayName[i].unlocked = true;
+            } else {
+                arrayName[i].unlocked = false;
             }
         }
     };
