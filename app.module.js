@@ -197,7 +197,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         upgradeService.checkAvailability(retailUpgrades, gameData);
         upgradeService.checkAvailability(cardUpgrades, gameData);
         upgradeService.checkAvailability(marketingUpgrades, gameData);
-        achievementService.checkAchievementStatus(gameData, retailUpgrades, cardUpgrades, marketingUpgrades);
+        achievementService.checkAchievementStatus();
         setNumDisplays();
     };
     
@@ -219,7 +219,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
             
             gameData.cardFlow = numberService.tidyUpNum(gameData.cardFlow);
             gameData.incomeRate = numberService.tidyUpNum(gameData.incomeRate);
-            achievementService.checkAchievementStatus(gameData, retailUpgrades, cardUpgrades, marketingUpgrades);
+            achievementService.checkAchievementStatus();
             setNumDisplays();
         }
     };
@@ -266,7 +266,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         gameData.income = numberService.tidyUpNum(gameData.income);
         gameData.incomeRate = numberService.tidyUpNum(gameData.incomeRate);
         updateSessionLength();
-        achievementService.checkAchievementStatus(gameData, retailUpgrades, cardUpgrades, marketingUpgrades);
+        achievementService.checkAchievementStatus();
         setNumDisplays();
     };
     
