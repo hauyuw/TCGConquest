@@ -20,7 +20,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     var deleteDialogLoc = './app/data/delete-confirmation.template.html';
     var starterDialogLoc = './app/data/starterModal.template.html';
       
-    //data binding for achievementService variables
+    //data binding for achievementService variables so that numbers will show properly in the "Achievements" tab
     $scope.$watch(function() { return achievementService.count; }, function(count) {
         $scope.count = count;
     });
@@ -45,7 +45,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         gameData.duration += $scope.sessionLength;
     };
     
-    //TO DO: MOVE INTO ITS OWN SERVICE
+    //TODO: MOVE INTO ITS OWN SERVICE
     var openDialog = function(location) {
          ngDialog.open({ 
              template: location,
@@ -64,6 +64,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.debugLog = function() {
+        //TODO: Expand function or remove it from production
         ngDialog.open({ 
              template: 'version: ' + config.version + '<br>game name: ' + gameData.gameName + '<br>clicks: ' + gameData.clicks,
              plain: true
@@ -76,7 +77,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
       
     $scope.randomizeGameName = function() {
         $scope.gameName = generateRandomGameName.shuffle();
-        //CHEAP FIX; FIND BETTER WAY IF THERE'S TIME
+        //FIXME: CHEAP FIX; FIND BETTER WAY IF THERE'S TIME
         closeDialog(starterDialogLoc);
         openDialog(starterDialogLoc);
     };
@@ -106,8 +107,11 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     $scope.closeWarning = function() {
         closeDialog(deleteDialogLoc);
         $scope.error = '';
-        closeDialog('./app/data/import-dialog.template.html');
      };
+      
+    $scope.closeImport = function() {
+        closeDialog('./app/data/import-dialog.template.html');
+    };
     
     $scope.saveGame = function() {
         console.log('game has been running for ' + gameData.duration/60000 + ' minutes');
@@ -168,7 +172,12 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         if(gameData.gameName === '') {
             $scope.nameYourGame();
         }
-        $scope.closeWarning();
+        $scope.closeImport();
+        
+        if (saveFile !== null) {
+            //gives confirmation when import game is successfully loaded
+            notificationService.giveStatus('Your game was successfully loaded', 'green');
+        }
         console.log('version ' + config.version);
     };
     

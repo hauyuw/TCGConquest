@@ -1,87 +1,79 @@
 <!DOCTYPE HTML>
 <html ng-app="app">
-  <head>
+
+<head>
+    <!-- TODO: Add SEO and metadata -->
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TCGConquest</title>
-      <!-- AngularJS library links -->
-      <script src="./asset/lib/angular.min.js"></script>
-      <script src="./asset/lib/angular-animate.min.js"></script>
-      <script src="asset/lib/ngDialog.min.js"></script>
-      
-      <!-- Link to script with custom modules, controllers, and directives -->  
-      <script type="text/javascript" src="./asset/js/kickstart.min.js"></script>
-      <script src="./app.module.js"></script> 
-      <script src="./app/achievements/achievements.directive.js"></script>
-      <script src="./app/achievements/achievements.module.js"></script>
-      <script src="./app/achievements/achievements.service.js"></script>
-      <script src="./app/layout/footer.directive.js"></script>
-      <script src="./app/layout/settings.directive.js"></script>
-      <script src="./app/layout/notification.service.js"></script>
-      <script src="./app/rarecard/rarecard.module.js"></script>
-      <script src="./app/rarecard/rarecard.service.js"></script>
-      <script src="./app/services/BoosterName.service.js"></script>
-      <script src="./app/services/GameName.factory.js"></script>
-      <script src="./app/services/number.service.js"></script>
-      <script src="./app/data/save.module.js"></script>
-      <script src="./app/data/load.service.js"></script>
-      <script src="./app/data/save.service.js"></script>
-      <script src="./app/upgrades/upgrades.directive.js"></script>
-      <script src="./app/upgrades/upgrades.module.js"></script>
-      <script src="./app/upgrades/upgrades.service.js"></script>
-      <script src="./app/upgrades/retail.value.js"></script>
-      <script src="./app/upgrades/card.value.js"></script>
-      <script src="./app/upgrades/marketing.value.js"></script>
-      
-      <script src="./asset/lib/lz-string.min.js"></script>
-      
-      <!-- Kickstrap -->
-      <link rel="stylesheet" href="./asset/css/kickstart.min.css" />
-      <link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-      
-      <!-- Font Awesome -->
-      <link rel="stylesheet" href="./asset/css/font-awesome.min.css">
-      
-      <!--Utility OpenType-->
-      <link href="./asset/css/utility-opentype.min.css" rel="stylesheet">
-      
-      <link rel="stylesheet" href="./asset/css/customstyle.css" />
-      <link rel="stylesheet" href="./asset/css/ngDialog.css" />
-      <link rel="stylesheet" href="./asset/css/ngDialog-theme-default.css" />
-      
-  </head>
-  <body ng-controller="MainController">
-      <br>
-      <div class="wrapper">
-          <div class="row">
-              <section class="col-4">
-                  <div class="row"><span class="md"><em>{{game.gameName}}</em></span><br></div>
-                  <div class="row"><span class="xxs">Your TCG taking the world by storm</span></div>
-                  <div class="row"><a href="" ng-click="saveGame()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</a></div>
-                  <div class="row"></div>
-              </section>
-              <section class="col-5">
-                  <p>
-                      <span class="rg"><i class="fa fa-jpy"></i>{{incomeDisplay}}</span><br>
-                      <span class="xxs"><i class="fa fa-jpy"></i>{{incomeRateDisplay}} per second</span></p>
-                  <p>
-                      <span class="rg">{{cardsSoldDisplay}} cards sold</span><br>
-                      <span class="xxs">{{cardFlowDisplay}} cards sold per second</span>
-                  </p>
-              </section>
-              <section class="col-3">
-<!--
+    <!-- AngularJS library links -->
+    <script src="./asset/lib/angular.min.js"></script>
+    <script src="./asset/lib/angular-animate.min.js"></script>
+    <script src="asset/lib/ngDialog.min.js"></script>
+    <!-- Link to script with custom modules, controllers, and directives -->
+    <script type="text/javascript" src="./asset/js/kickstart.min.js"></script>
+    <script src="./app.module.js"></script>
+    <script src="./app/achievements/achievements.directive.js"></script>
+    <script src="./app/achievements/achievements.module.js"></script>
+    <script src="./app/achievements/achievements.service.js"></script>
+    <script src="./app/layout/footer.directive.js"></script>
+    <script src="./app/layout/settings.directive.js"></script>
+    <script src="./app/layout/notification.service.js"></script>
+    <script src="./app/rarecard/rarecard.module.js"></script>
+    <script src="./app/rarecard/rarecard.service.js"></script>
+    <script src="./app/services/BoosterName.service.js"></script>
+    <script src="./app/services/GameName.factory.js"></script>
+    <script src="./app/services/number.service.js"></script>
+    <script src="./app/data/save.module.js"></script>
+    <script src="./app/data/load.service.js"></script>
+    <script src="./app/data/save.service.js"></script>
+    <script src="./app/upgrades/upgrades.directive.js"></script>
+    <script src="./app/upgrades/upgrades.module.js"></script>
+    <script src="./app/upgrades/upgrades.service.js"></script>
+    <script src="./app/upgrades/retail.value.js"></script>
+    <script src="./app/upgrades/card.value.js"></script>
+    <script src="./app/upgrades/marketing.value.js"></script>
+    <script src="./asset/lib/lz-string.min.js"></script>
+    <!-- Kickstrap -->
+    <link rel="stylesheet" href="./asset/css/kickstart.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./asset/css/font-awesome.min.css">
+    <!--Utility OpenType-->
+    <link href="./asset/css/utility-opentype.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./asset/css/customstyle.css" />
+    <link rel="stylesheet" href="./asset/css/ngDialog.css" />
+    <link rel="stylesheet" href="./asset/css/ngDialog-theme-default.css" /> </head>
+
+<body ng-controller="MainController">
+    <br>
+    <div class="wrapper">
+        <div class="row">
+            <section class="col-4">
+                <div class="row"><span class="md"><em>{{game.gameName}}</em></span>
+                    <br> </div>
+                <div class="row"><span class="xxs">Your TCG taking the world by storm</span></div>
+                <div class="row"><a href="" ng-click="saveGame()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</a></div>
+                <div class="row"></div>
+            </section>
+            <section class="col-5">
+                <p> <span class="rg"><i class="fa fa-jpy"></i>{{incomeDisplay}}</span>
+                    <br> <span class="xxs"><i class="fa fa-jpy"></i>{{incomeRateDisplay}} per second</span></p>
+                <p> <span class="rg">{{cardsSoldDisplay}} cards sold</span>
+                    <br> <span class="xxs">{{cardFlowDisplay}} cards sold per second</span> </p>
+            </section>
+            <section class="col-3">
+                <!--
                   <p>How people play your game:<br>
                   <progress value="10" max="100"> The power of their imagination</progress>
                   <span class="progresslabel">Label</span></p>
--->
-                  <span ng-show="checkRareCardCount()"><i class="fa fa-star-o fa-fw"></i>Rare cards: {{game.rareCardCount}}</span>
-<!--                  <a ng-click="">Invest</a>-->
-                  <p ng-show="momentum"><i class="fa fa-refresh fa-fw"></i>Momentum: </p>
-              </section>
-          </div>
-          <div class="row"></div>
-          <div class="row">
+--><span ng-show="checkRareCardCount()"><i class="fa fa-star-o fa-fw"></i>Rare cards: {{game.rareCardCount}}</span>
+                <!--                  <a ng-click="">Invest</a>-->
+                <p ng-show="momentum"><i class="fa fa-refresh fa-fw"></i>Momentum: </p>
+            </section>
+        </div>
+        <div class="row"></div>
+        <div class="row">
             <ul class="tabs col-12" id="nav" data-ks-tabs>
                 <li class="open"><a href="#upgrades">Upgrades</a></li>
                 <li><a href="#achievements">Achievements</a></li>
@@ -98,23 +90,26 @@
                     <settings></settings>
                 </article>
             </div>
-
-          </div>
-      </div>
-      
-      <div class="footer">
-          <footer></footer>
-      </div>
-      
+        </div>
+    </div>
+    <div class="footer">
+        <footer></footer>
+    </div>
     <script>
         //Google Analytics
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
         ga('create', 'UA-75793908-2', 'auto');
         ga('send', 'pageview');
     </script>
-  </body>
+</body>
+
 </html>

@@ -3,6 +3,7 @@
 angular.module('achievementModule')
     .service('achievementService', ['gameData', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'notificationService', function(gameData, retailUpgrades, cardUpgrades, marketingUpgrades, notificationService) {
     //list of all achievements
+    //TODO: Have at least 25 achievements for first beta
     this.achievementList = [
         {
             name: 'Your Story',
@@ -98,7 +99,7 @@ angular.module('achievementModule')
             }
         },
         {
-            name: "I Don't Wanna Grow Up",
+            name: 'I Don\'t Wanna Grow Up',
             criteria: 'Buy 100 CardGames R Us',
             blurb: 'All other card games need to step off your turf',
             id: 'A10',
@@ -111,7 +112,7 @@ angular.module('achievementModule')
             }
         },
         {
-            name: 'Diversification',
+            name: 'A Robust Portfolio',
             criteria: 'Diversify your revenue stream',
             blurb: '',
             id: 'A11',
