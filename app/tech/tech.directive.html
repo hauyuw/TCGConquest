@@ -1,0 +1,43 @@
+<div class="row tab-overflow">
+    <div class="row">
+        <div class="tech-info"> <span class="pull-right">
+          <span ng-show="showPurchased()">Purchased</span> <a href="" ng-click="buyTech()" ng-hide="hideBuyLink()">Buy<br><small>(Cost: {{techCost}})</small></a> </span>
+            <h5>{{techName}}</h5> <em>{{techDesc}}</em> </div>
+    </div>
+    <div class="tree-overflow btn">
+        <div class="row">
+            <div class="col-12">
+                <div class="tech-tree main-branch">
+                    <ul>
+                        <li ng-repeat="main in mainBranch">
+                            <input type="radio" name="tech" id="{{main.id}}" ng-disabled="disableBtn(main)">
+                            <label for="{{main.id}}" ng-class="{ 'available' : checkAvailability(main), 'purchased': isOwned(main) }" ng-click="showInfo(main)">{{main.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-xs-6 col-half">
+                <div class="tech-tree left-branch">
+                    <ul>
+                        <li ng-repeat="occult in occultBranch">
+                            <input type="radio" name="tech" id="{{occult.id}}" ng-disabled="disableBtn(occult)">
+                            <label for="{{occult.id}}" ng-class="{ 'available' : checkAvailability(occult), 'purchased': isOwned(occult) }" ng-click="showInfo(occult)">{{occult.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-6 col-xs-6 col-half">
+                <div class="tech-tree right-branch">
+                    <ul>
+                        <li ng-repeat="science in scienceBranch">
+                            <input type="radio" name="tech" id="{{science.id}}" ng-disabled="disableBtn(science)">
+                            <label for="{{science.id}}" ng-class="{ 'available' : checkAvailability(science), 'purchased': isOwned(science) }" ng-click="showInfo(science)">{{science.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,8 +3,8 @@
 angular.module('app')
     .service('generateRandomGameName', function() {
     var randomGameName;
-    var word1 = ['WIXOSS', 'Battle', 'Duel', 'Magic', 'Cardfight!!', 'Card', 'Dragon', 'Epic', 'Knights of', 'The Last', "Wizard's"];
-    var word2 = ['Masters', 'Buddyfight', 'Monsters', 'the Gathering', 'Vanguard', 'Wars', 'King', 'Queen', 'Showdown', 'Quest', 'Soul', 'Hearthstone'];
+    var word1 = ['WIXOSS', 'Battle', 'Duel', 'Magic', 'Cardfight!!', 'Card', 'Dragon', 'Epic', 'Knights of', 'The Last', 'Wizard\'s', 'Future', 'Legend of', 'Star', 'Galaxy'];
+    var word2 = ['Masters', 'Buddyfight', 'Spirits', 'Monsters', 'the Gathering', 'Vanguard', 'Wars', 'King', 'Queen', 'Showdown', 'Quest', 'Soul', 'Hearthstone', 'Combat'];
     var randomNum1;
     var randomNum2;
     
@@ -15,9 +15,6 @@ angular.module('app')
         randomGameName = word1[randomNum1] + ' ' + word2[randomNum2];
         return randomGameName;
     }
-    
-//    randomGameName = word1[randomNum1] + ' ' + word2[randomNum2];
-//    return randomGameName;
 });
     
 })();

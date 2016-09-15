@@ -11,31 +11,31 @@ body {
 .button-retail {
     background-color: #47A5DF;
     border-color: #47A5DF;
-    color: #fff
+    color: #fff;
 }
 
 .button-retail.open {
-    background-color: #319adb
+    background-color: #319adb;
 }
 
 .button-card {
     background-color: #47A5DF;
     border-color: #47A5DF;
-    color: #fff
+    color: #fff;
 }
 
 .button-card.open {
-    background-color: #319adb
+    background-color: #319adb;
 }
 
 .button-marketing {
     background-color: #47A5DF;
     border-color: #47A5DF;
-    color: #fff
+    color: #fff;
 }
 
 .button-marketing.open {
-    background-color: #319adb
+    background-color: #319adb;
 }
 
 
@@ -142,6 +142,20 @@ input[type="text"]#gamename {
     font-size: 0.75em;
 }
 
+.tech-tree li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+}
+.tech-tree a {
+    border: black solid 1px;
+    border-radius: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 1rem;
+    text-decoration: none;
+}
+
 /*
 progress {
     background-color: blueviolet;
@@ -163,3 +177,165 @@ progress[value]::-webkit-progress-value {
     top: -1.6rem;
     font-size: small;
 }*/
+
+/* tech tree style */
+.pull-right {
+  float: right;
+}
+
+.tech-info {
+  margin: auto;
+  width: 70rem;
+  height: 10rem;
+  display: block;
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+  overflow-y: auto;
+}
+
+.tech-info a {
+  display: block;
+  line-height: 1;
+}
+
+.tree-overflow {
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.tech-tree li {
+  text-align: center;
+  list-style-type: none;
+}
+
+.tech-tree li input[type="radio"] {
+  display: none;
+}
+
+.tech-tree li label {
+  width: 10rem;
+  display: inline-block;
+  box-shadow: inset 1px 1px 2px 1px grey;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: lightgrey;
+  background-color: lightgrey;
+  -webkit-transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.tech-tree li label.purchased {
+  box-shadow: none;
+  background-color: gold;
+  color: black;
+}
+
+.tech-tree li label.available {
+  box-shadow: none;
+  background-color: #47A5DF;
+  color: white;
+}
+
+.tech-tree li label.available:hover, .tech-tree li label.purchased:hover, .tech-tree li input[type="radio"]:checked + label {
+/* Google Material Shadow based on https://codepen.io/sdthornton/pen/wBZdXq  */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23);
+}
+
+/* create connector lines between each item in the list */
+.tech-tree li:after {
+  content: '';
+  position: relative;
+  margin-top: -6px;
+  left: 50%;
+  display: block;
+  border-left: 1px solid black;
+  height: 12px;
+}
+.purchased ~ .tech-tree li:after {
+  border-color: orange;
+}
+
+/* remove connector from last child/terminal node in the list */
+.tech-tree li:last-child:after {
+  display: none;
+}
+
+.left-branch:before {
+  content: 'Occult';
+  position: relative;
+  display: block;
+  left: 50%;
+}
+
+.right-branch:before {
+  content: 'Super Science';
+  position: relative;
+  display: block;
+  left: 40%;
+}
+
+@media only screen and (min-width: 768px) {
+  .main-branch li:last-child:after {
+    content: '';
+    border-left: 1px solid black;
+    height: 15px;
+    position: relative;
+    display: block;
+    left: 50%;
+  }
+  .main-branch {
+    margin-bottom: -24px;
+  }
+  .left-branch:before, .right-branch:before {
+    top: -30px;
+  }
+  .main-branch ul:after {
+    content: '';
+    position: relative;
+    display: block;
+    left: 25%;
+    border-top: 1px solid black;
+    width: 50%;
+  }
+  .left-branch ul:before {
+    content: '';
+    position: relative;
+    display: block;
+    left: 50%;
+    border-top: 1px solid black;
+    width: 50%;
+    margin-top: -26px;
+  }
+  .right-branch ul:before {
+    content: '';
+    position: relative;
+    display: block;
+    border-top: 1px solid black;
+    width: 50%;
+    margin-top: -26px;
+  }
+  .left-branch li:first-child:before,
+  .right-branch li:first-child:before {
+    content: '';
+    border-left: 1px solid black;
+    height: 15px;
+    position: relative;
+    display: block;
+    left: 50%;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .main-branch {
+    margin-bottom: -25px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .main-branch {
+    margin-bottom: -26px;
+  }
+}

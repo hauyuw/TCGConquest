@@ -21,5 +21,6 @@ angular.module('saveModule', [])
     retail_upgrades: [],
     card_upgrades: [],
     marketing_upgrades: [],
-    achievements: []
+    achievements: [],
+    tech: []
 });

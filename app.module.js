@@ -1,16 +1,20 @@
 (function() {
 
 //setting up the AngularJS module
-var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'notificationModule', 'rareCardModule']);
+var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'techModule', 'notificationModule', 'rareCardModule']);
 
 //main AngularJS controller for the game 
-app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService',
-  function($scope, $interval, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService) {
+app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'techService', 'numberService', 'rareCardService',
+  function($scope, $interval, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, techService, numberService, rareCardService) {
     $scope.game = gameData;
     $scope.retailUpgrades = retailUpgrades;
     $scope.cardUpgrades = cardUpgrades;
     $scope.marketingUpgrades = marketingUpgrades;
     $scope.achievementList = achievementService.achievementList;
+    $scope.obj = techService.obj;
+    $scope.techName = techService.techName;
+    $scope.techDesc = techService.techDesc;
+    $scope.techCost = techService.techCost;
     $scope.incomeDisplay = '';
     $scope.incomeRateDisplay = '';
     $scope.cardsSoldDisplay = '';
