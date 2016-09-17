@@ -16,8 +16,8 @@ angular.module('saveModule')
         }
     };
     
-    //creates new array containing objects that record which achievements the player has earned
-    this.convertAchievements = function(arrayName, saveArray) {
+    //creates new array containing objects that record which achievements and/or tech investments the player has earned
+    this.convertAssets = function(arrayName, saveArray) {
         for (var i = 0; i < arrayName.length; i++) {
             var keyName = arrayName[i].id;
             var keyValue = arrayName[i].unlocked;
@@ -25,6 +25,7 @@ angular.module('saveModule')
             obj[keyName] = keyValue;
             saveArray[i] = obj;
         }
+        console.log(saveArray);
     };
     
     //creates a text file with the stringified JSON save data for download in browser

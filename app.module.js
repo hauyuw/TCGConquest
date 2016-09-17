@@ -4,17 +4,14 @@
 var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'techModule', 'notificationModule', 'rareCardModule']);
 
 //main AngularJS controller for the game 
-app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'techService', 'numberService', 'rareCardService',
-  function($scope, $interval, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, techService, numberService, rareCardService) {
+app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService', 'techList',
+  function($scope, $interval, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService, techList) {
     $scope.game = gameData;
     $scope.retailUpgrades = retailUpgrades;
     $scope.cardUpgrades = cardUpgrades;
     $scope.marketingUpgrades = marketingUpgrades;
     $scope.achievementList = achievementService.achievementList;
-    $scope.obj = techService.obj;
-    $scope.techName = techService.techName;
-    $scope.techDesc = techService.techDesc;
-    $scope.techCost = techService.techCost;
+    $scope.config = config;
     $scope.incomeDisplay = '';
     $scope.incomeRateDisplay = '';
     $scope.cardsSoldDisplay = '';
@@ -23,6 +20,9 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     $scope.lastTimeStamp = new Date();
     var deleteDialogLoc = './app/data/delete-confirmation.template.html';
     var starterDialogLoc = './app/data/starterModal.template.html';
+    var mainBranch = techList[0].list;
+    var occultBranch = techList[1].list;
+    var scienceBranch = techList[2].list;
       
     //data binding for achievementService variables so that numbers will show properly in the "Achievements" tab
     $scope.$watch(function() { return achievementService.count; }, function(count) {
@@ -122,7 +122,10 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         saveService.convertUpgrades(retailUpgrades, gameData.retail_upgrades);
         saveService.convertUpgrades(cardUpgrades, gameData.card_upgrades);
         saveService.convertUpgrades(marketingUpgrades, gameData.marketing_upgrades);
-        saveService.convertAchievements(achievementService.achievementList, gameData.achievements);
+        saveService.convertAssets(achievementService.achievementList, gameData.achievements);
+        saveService.convertAssets(techList[0].list, gameData.mainTech);
+        saveService.convertAssets(techList[1].list, gameData.occultTech);
+        saveService.convertAssets(techList[2].list, gameData.scienceTech);
         updateSessionLength();
         localStorage['tcgconquest_save'] = LZString.compressToBase64(JSON.stringify(gameData));
         ga('send', 'event', 'TCGConquest', 'Save');
@@ -165,12 +168,18 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         loadService.reconvertUpgrades(retailUpgrades, $scope.game.retail_upgrades, $scope.game);
         loadService.reconvertUpgrades(cardUpgrades, $scope.game.card_upgrades, $scope.game);
         loadService.reconvertUpgrades(marketingUpgrades, $scope.game.marketing_upgrades, $scope.game);
-        loadService.reconvertAchievements(achievementService.achievementList, $scope.game.achievements);
+        loadService.reconvertAssets(achievementService.achievementList, $scope.game.achievements);
+        loadService.reconvertAssets(techList[0].list, $scope.game.mainTech);
+        loadService.reconvertAssets(techList[1].list, $scope.game.occultTech);
+        loadService.reconvertAssets(techList[2].list, $scope.game.scienceTech);
         gameData = $scope.game;
         
         upgradeService.checkAvailability(retailUpgrades, gameData);
         upgradeService.checkAvailability(cardUpgrades, gameData);
         upgradeService.checkAvailability(marketingUpgrades, gameData);
+        loadService.reapplyInvestments(mainBranch);
+        loadService.reapplyInvestments(occultBranch);
+        loadService.reapplyInvestments(scienceBranch);
         cardUpgrades[0].blurb = 'Previewing this summer: "' + generateRandomBoosterName.shuffle() + '"';
         
         if(gameData.gameName === '') {
@@ -258,7 +267,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.checkRareCardCount = function() {
-        if (gameData.rareCardCount > 0) {
+        if (gameData.rareCardCount != null) {
             return true;
         } else {
             return false;
@@ -273,7 +282,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         
         // doing the math of cards
         gameData.cardsSold += (gameData.cardFlow/(1000/config.tickInterval));
-        gameData.cardsSold = Math.round(gameData.cardsSold);
+//        gameData.cardsSold = Math.round(gameData.cardsSold);  FIXME: is causing the count not to increment when cardFlow is a low integer
         gameData.cardFlow = numberService.tidyUpNum(gameData.cardFlow);
         gameData.income += (gameData.incomeRate/(1000/config.tickInterval));
         gameData.income = numberService.tidyUpNum(gameData.income);

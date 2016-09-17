@@ -13,7 +13,7 @@ angular.module('saveModule', [])
     income: 0,
     incomeRate: 0,
     rareCardRate: 0.000000002,
-    rareCardCount: 0,
+    rareCardCount: null,
     totalRareCards: 0,
     soul: 0,
     momentum: 0,
@@ -22,5 +22,7 @@ angular.module('saveModule', [])
     card_upgrades: [],
     marketing_upgrades: [],
     achievements: [],
-    tech: []
+    mainTech: [],
+    occultTech: [],
+    scienceTech: []
 });

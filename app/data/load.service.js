@@ -28,8 +28,8 @@ angular.module('saveModule')
         }
     };
     
-    //takes the achievement array from the save location and reconverts for current game load, while accounting for the addition/removal of achievements from the overall list
-    this.reconvertAchievements = function(arrayName, saveArray) {
+    //takes the achievement and tech arrays from the save location and reconverts for current game load, while accounting for the addition/removal of achievements from the overall list
+    this.reconvertAssets = function(arrayName, saveArray) {
         if (!this.checkPresence(saveArray)) {
             return;
         }
@@ -40,6 +40,15 @@ angular.module('saveModule')
                 arrayName[i].unlocked = true;
             } else {
                 arrayName[i].unlocked = false;
+            }
+        }
+    };
+    
+    //reapplies the bonus/effects for each of the tech investments that the player currently owns
+    this.reapplyInvestments = function(arrayName) {
+        for (var i = 0; i < arrayName.length; i++) {
+            if (arrayName[i].unlocked) {
+                arrayName[i].upgrade();
             }
         }
     };

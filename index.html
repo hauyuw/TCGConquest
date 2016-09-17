@@ -27,8 +27,9 @@
     <script src="./app/data/save.module.js"></script>
     <script src="./app/data/load.service.js"></script>
     <script src="./app/data/save.service.js"></script>
+    <script src="./app/tech/tech.controller.js"></script>
     <script src="./app/tech/tech.module.js"></script>
-    <script src="./app/tech/tech.service.js"></script>
+    <script src="./app/tech/tech.factory.js"></script>
     <script src="./app/tech/tech.directive.js"></script>
     <script src="./app/upgrades/upgrades.directive.js"></script>
     <script src="./app/upgrades/upgrades.module.js"></script>
@@ -69,8 +70,8 @@
                 <!--
                   <p>How people play your game:<br>
                   <progress value="10" max="100"> The power of their imagination</progress>
-                  <span class="progresslabel">Label</span></p>
---><span ng-show="checkRareCardCount()"><i class="fa fa-star-o fa-fw"></i>Rare cards: {{game.rareCardCount}}</span>
+                  <span class="progresslabel">Label</span></p>-->
+                <span ng-show="checkRareCardCount()"><i class="fa fa-star-o fa-fw"></i>Rare cards: {{game.rareCardCount}}</span>
                 <p ng-show="momentum"><i class="fa fa-refresh fa-fw"></i>Momentum: </p>
             </section>
         </div>
