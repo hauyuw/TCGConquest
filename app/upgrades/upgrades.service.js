@@ -13,7 +13,7 @@ angular.module('upgradesModule')
     this.checkAvailability = function(arrayName, gameSaveFile) {
         //loop through objects to check if they're available for use
         for (var i = 0; i < arrayName.length; i++) {
-            if (arrayName[i].show) {
+            if (arrayName[i].show || arrayName[i].unlockThreshold === null) {
                 continue;
             }
             if ((arrayName[i].count !== null) || (gameSaveFile.income >= arrayName[i].cost && gameSaveFile.cardsSold >= arrayName[i].unlockThreshold)) {

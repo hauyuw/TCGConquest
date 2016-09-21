@@ -65,4 +65,17 @@ angular.module('upgradesModule')
         count: null,
         show: false
     },
+    {
+        name: 'Interdimensional Stores',
+        id: 'R6',
+        blurb: '',
+        baseCost: 25000,
+        cost: 25000,
+        unlockThreshold: null,
+        costIncreaseRate: 1.1,
+        adjustedCardFlow: 25,
+        adjustedIncomeRate: 250,
+        count: null,
+        show: false
+    },
 ]);

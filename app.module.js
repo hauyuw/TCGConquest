@@ -123,9 +123,9 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         saveService.convertUpgrades(cardUpgrades, gameData.card_upgrades);
         saveService.convertUpgrades(marketingUpgrades, gameData.marketing_upgrades);
         saveService.convertAssets(achievementService.achievementList, gameData.achievements);
-        saveService.convertAssets(techList[0].list, gameData.mainTech);
-        saveService.convertAssets(techList[1].list, gameData.occultTech);
-        saveService.convertAssets(techList[2].list, gameData.scienceTech);
+        saveService.convertAssets(mainBranch, gameData.mainTech);
+        saveService.convertAssets(occultBranch, gameData.occultTech);
+        saveService.convertAssets(scienceBranch, gameData.scienceTech);
         updateSessionLength();
         localStorage['tcgconquest_save'] = LZString.compressToBase64(JSON.stringify(gameData));
         ga('send', 'event', 'TCGConquest', 'Save');
@@ -169,9 +169,9 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
         loadService.reconvertUpgrades(cardUpgrades, $scope.game.card_upgrades, $scope.game);
         loadService.reconvertUpgrades(marketingUpgrades, $scope.game.marketing_upgrades, $scope.game);
         loadService.reconvertAssets(achievementService.achievementList, $scope.game.achievements);
-        loadService.reconvertAssets(techList[0].list, $scope.game.mainTech);
-        loadService.reconvertAssets(techList[1].list, $scope.game.occultTech);
-        loadService.reconvertAssets(techList[2].list, $scope.game.scienceTech);
+        loadService.reconvertAssets(mainBranch, $scope.game.mainTech);
+        loadService.reconvertAssets(occultBranch, $scope.game.occultTech);
+        loadService.reconvertAssets(scienceBranch, $scope.game.scienceTech);
         gameData = $scope.game;
         
         upgradeService.checkAvailability(retailUpgrades, gameData);
@@ -236,7 +236,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
             gameData.incomeRate += arrayName[index].adjustedIncomeRate;
             arrayName[index].cost = upgradeService.calculateNextCost(arrayName, index);
             if (arrayName[index].adjustedRareCardRate) {
-                gameData.rareCardRate = gameData.rareCardRate * arrayName[index].adjustedRareCardRate;
+                gameData.rareCardRate *= arrayName[index].adjustedRareCardRate;
             }
             
             gameData.cardFlow = numberService.tidyUpNum(gameData.cardFlow);
@@ -247,15 +247,11 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.showAchievement = function(index) {
-        if(achievementService.achievementList[index].unlocked) {
-            return true;
-        }
+        return achievementService.achievementList[index].unlocked ? true : false;
     };
     
     $scope.showUpgrade = function(arrayName, index) {
-        if (arrayName[index].show) {
-            return true;
-        }
+        return arrayName[index].show ? true : false;
     };
       
     $scope.checkAffordability = function(arrayName, index) {
@@ -267,11 +263,7 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
     };
       
     $scope.checkRareCardCount = function() {
-        if (gameData.rareCardCount != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return (gameData.rareCardCount != null) ? true : false;
     };
     
     $scope.callAtInterval = function() {

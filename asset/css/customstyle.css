@@ -3,6 +3,13 @@ body {
     /*  background: #DAF0EE;*/
 }
 
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
 
 /*
 .button-retail{background-color:#58AA00;border-color:#58AA00;color:#fff} 
@@ -145,10 +152,6 @@ input[type="text"]#gamename {
 
 
 /* tech tree style */
-
-.pull-right {
-    float: right;
-}
 
 .tech-info {
     margin: auto;

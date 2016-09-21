@@ -1,9 +1,7 @@
 (function () {
     angular.module('techModule')
-    .factory('techList', ['config', 'gameData', function(config, gameData) {
-//    var mainBranch = techList[0];
-//    var occultBranch = techList[1];
-//    var scienceBranch = techList[2];
+    .factory('techList', ['config', 'gameData', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', function(config, gameData, retailUpgrades, cardUpgrades, marketingUpgrades) {
+    // mainBranch = techList[0]; occultBranch = techList[1]; scienceBranch = techList[2];
     var techList = [
         {
             branch: 'main',
@@ -137,7 +135,11 @@
                         if (techList[2].list[previousIndex].unlocked) { return true; } 
                         else { return false; }
                     },
-                    upgrade: function() {},
+                    upgrade: function() {
+                        var searchKey = 'Interdimensional Stores';
+                        var index = retailUpgrades.findIndex(function(element) {return element.name ===searchKey;});
+                        retailUpgrades[index].show = true;
+                    },
                     unlocked: false
                 }
             ]
