@@ -11,31 +11,31 @@ body {
 .button-retail {
     background-color: #47A5DF;
     border-color: #47A5DF;
-    color: #fff
+    color: #fff;
 }
 
 .button-retail.open {
-    background-color: #319adb
+    background-color: #319adb;
 }
 
 .button-card {
     background-color: #47A5DF;
     border-color: #47A5DF;
-    color: #fff
+    color: #fff;
 }
 
 .button-card.open {
-    background-color: #319adb
+    background-color: #319adb;
 }
 
 .button-marketing {
     background-color: #47A5DF;
     border-color: #47A5DF;
-    color: #fff
+    color: #fff;
 }
 
 .button-marketing.open {
-    background-color: #319adb
+    background-color: #319adb;
 }
 
 
