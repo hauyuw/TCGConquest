@@ -19,11 +19,13 @@ angular.module('saveModule')
         for (var i = 0; i < saveArray.length; i++) {
             var searchKey = Object.getOwnPropertyNames(saveArray[i]);
             var propValue = saveArray[i][searchKey];
-            if (arrayName[i].id == searchKey && propValue >= 0) {
-                arrayName[i].count = propValue;
-                arrayName[i].show = true;
-                arrayName[i].cost = this.recalculateCost(arrayName, i, propValue);
-                this.rebalanceRates(arrayName, i, propValue, gameSaveFile);
+            for (var j = 0; j < arrayName.length; j++) {
+                if (arrayName[j].id == searchKey && propValue >= 0) {
+                    arrayName[j].count = propValue;
+                    arrayName[j].show = true;
+                    arrayName[j].cost = this.recalculateCost(arrayName, j, propValue);
+                    this.rebalanceRates(arrayName, j, propValue, gameSaveFile);
+                }
             }
         }
     };
@@ -33,13 +35,21 @@ angular.module('saveModule')
         if (!this.checkPresence(saveArray)) {
             return;
         }
+        
+        //if the save array is empty, lock everything because they haven't earned it yet in this game; prevents achievements and investments from being carried over between different save files
+        if (saveArray.length === 0) {
+            arrayName.forEach(function(item) {
+                item.unlocked = false;
+            });
+        }
+        
         for (var i = 0; i < saveArray.length; i++) {
             var searchKey = Object.getOwnPropertyNames(saveArray[i]);
             var propValue = saveArray[i][searchKey];
-            if ((arrayName[i].id == searchKey) && propValue) {
-                arrayName[i].unlocked = true;
-            } else {
-                arrayName[i].unlocked = false;
+            for (var j = 0; j < arrayName.length; j++) {
+                if ((arrayName[j].id == searchKey) && propValue) {
+                    arrayName[j].unlocked = true;
+                }
             }
         }
     };
@@ -101,7 +111,6 @@ angular.module('saveModule')
             return false;
         }
         
-//        console.log('Valid game state was given');
         return true;
     };
     

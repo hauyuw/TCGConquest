@@ -42,7 +42,7 @@ angular.module('upgradesModule')
         show: false
     },
     {
-        name: "Collectors' Tin",
+        name: 'Collectors\' Tin',
         id: 'C4',
         blurb: '',
         baseCost: 4000,
@@ -65,6 +65,34 @@ angular.module('upgradesModule')
         adjustedCardFlow: 100,
         adjustedIncomeRate: 0,
         adjustedRareCardRate: 5,
+        count: null,
+        show: false
+    },
+    {
+        name: 'New Archetype',
+        id: 'C6',
+        blurb: '',
+        baseCost: 5500,
+        cost: 5500,
+        unlockThreshold: null,
+        costIncreaseRate: 2,
+        adjustedCardFlow: 100,
+        adjustedIncomeRate: 0,
+        adjustedRareCardRate: 0,
+        count: null,
+        show: false
+    },
+    {
+        name: 'Game Format',
+        id: 'C7',
+        blurb: '',
+        baseCost: 5500,
+        cost: 5500,
+        unlockThreshold: null,
+        costIncreaseRate: 2,
+        adjustedCardFlow: 100,
+        adjustedIncomeRate: 0,
+        adjustedRareCardRate: 0,
         count: null,
         show: false
     },

@@ -4,8 +4,8 @@
 var app = angular.module('app', ['ngAnimate', 'ngDialog', 'achievementModule', 'upgradesModule', 'saveModule', 'techModule', 'notificationModule', 'rareCardModule']);
 
 //main AngularJS controller for the game 
-app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService', 'techList',
-  function($scope, $interval, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService, techList) {
+app.controller('MainController', ['$scope', '$interval', '$q', 'ngDialog', 'config', 'gameData', 'generateRandomGameName', 'generateRandomBoosterName', 'saveService', 'loadService', 'notificationService', 'achievementService', 'retailUpgrades', 'cardUpgrades', 'marketingUpgrades', 'upgradeService', 'numberService', 'rareCardService', 'techList',
+  function($scope, $interval, $q, ngDialog, config, gameData, generateRandomGameName, generateRandomBoosterName, saveService, loadService, notificationService, achievementService, retailUpgrades, cardUpgrades, marketingUpgrades, upgradeService, numberService, rareCardService, techList) {
     $scope.game = gameData;
     $scope.retailUpgrades = retailUpgrades;
     $scope.cardUpgrades = cardUpgrades;
@@ -145,47 +145,72 @@ app.controller('MainController', ['$scope', '$interval', 'ngDialog', 'config', '
             return;
         }
         var save_data;
-        if (saveFile === null) {
-            save_data = JSON.parse(LZString.decompressFromBase64(localStorage['tcgconquest_save']));
-        } else {
-            save_data = document.getElementById('importbox').value;
+        
+        function locateSave() {
+            var deferred = $q.defer();
             
-            if (!loadService.importServices(save_data)) {
-                $scope.error = 'You attempted to load an invalid game state. Please try again with data from a valid file.';
-                return;
+            if (saveFile === null) {
+                deferred.resolve(save_data = JSON.parse(LZString.decompressFromBase64(localStorage['tcgconquest_save'])));
+            } else {
+                save_data = document.getElementById('importbox').value;       
+                if (!loadService.importServices(save_data)) {
+                    $scope.error = 'You attempted to load an invalid game state. Please try again with data from a valid file.';
+                    return;
+                }
+                deferred.resolve(save_data = JSON.parse(LZString.decompressFromBase64(document.getElementById('importbox').value)));
             }
-            save_data = JSON.parse(LZString.decompressFromBase64(document.getElementById('importbox').value));
+            return deferred.promise;
         }
         
-        //only import values for matching keys between the save file and the current save file structure; prevents breakdown in case of new object properties added
-        var fileStructure = Object.keys(save_data);
-        fileStructure.forEach(function(prop) {
-            if ($scope.game.hasOwnProperty(prop)) {
-                $scope.game[prop] = save_data[prop];
-            }
-        });
-        
-        loadService.reconvertUpgrades(retailUpgrades, $scope.game.retail_upgrades, $scope.game);
-        loadService.reconvertUpgrades(cardUpgrades, $scope.game.card_upgrades, $scope.game);
-        loadService.reconvertUpgrades(marketingUpgrades, $scope.game.marketing_upgrades, $scope.game);
-        loadService.reconvertAssets(achievementService.achievementList, $scope.game.achievements);
-        loadService.reconvertAssets(mainBranch, $scope.game.mainTech);
-        loadService.reconvertAssets(occultBranch, $scope.game.occultTech);
-        loadService.reconvertAssets(scienceBranch, $scope.game.scienceTech);
-        gameData = $scope.game;
-        
-        upgradeService.checkAvailability(retailUpgrades, gameData);
-        upgradeService.checkAvailability(cardUpgrades, gameData);
-        upgradeService.checkAvailability(marketingUpgrades, gameData);
-        loadService.reapplyInvestments(mainBranch);
-        loadService.reapplyInvestments(occultBranch);
-        loadService.reapplyInvestments(scienceBranch);
-        cardUpgrades[0].blurb = 'Previewing this summer: "' + generateRandomBoosterName.shuffle() + '"';
-        
-        if(gameData.gameName === '') {
-            $scope.nameYourGame();
+        function checkFileIntegrity() {
+            //only import values for matching keys between the save file and the current save file structure; prevents breakdown in case of new object properties added
+            var deferred = $q.defer();
+            var execute = function() {
+            Object.keys(save_data).forEach(function(prop) {
+                if ($scope.game.hasOwnProperty(prop)) {
+                    $scope.game[prop] = save_data[prop];
+                } 
+            });
+            Object.keys($scope.game).forEach(function(prop) {
+                if (!save_data.hasOwnProperty(prop)) {
+                    console.log('imported file doesn\'t have ' + prop + ', creating blank');
+                    $scope.game[prop] = [];
+                    console.log($scope.game[prop]);
+                }
+            });
+            };
+            deferred.resolve(execute());
+            return deferred.promise;
         }
-        $scope.closeImport();
+        
+        function loadFunctions() {
+            console.log('reconverting stuff');
+            loadService.reconvertUpgrades(retailUpgrades, $scope.game.retail_upgrades, $scope.game);
+            loadService.reconvertUpgrades(cardUpgrades, $scope.game.card_upgrades, $scope.game);
+            loadService.reconvertUpgrades(marketingUpgrades, $scope.game.marketing_upgrades, $scope.game);
+            loadService.reconvertAssets(achievementService.achievementList, $scope.game.achievements);
+            loadService.reconvertAssets(mainBranch, $scope.game.mainTech);
+            loadService.reconvertAssets(occultBranch, $scope.game.occultTech);
+            loadService.reconvertAssets(scienceBranch, $scope.game.scienceTech);
+            gameData = $scope.game; 
+            
+            upgradeService.checkAvailability(retailUpgrades, gameData);
+            upgradeService.checkAvailability(cardUpgrades, gameData);
+            upgradeService.checkAvailability(marketingUpgrades, gameData);
+            loadService.reapplyInvestments(mainBranch);
+            loadService.reapplyInvestments(occultBranch);
+            loadService.reapplyInvestments(scienceBranch);
+            cardUpgrades[0].blurb = 'Previewing this summer: "' + generateRandomBoosterName.shuffle() + '"';        
+        
+            if(gameData.gameName === '') {
+                $scope.nameYourGame();
+            }
+        }
+        
+        locateSave()
+            .then(checkFileIntegrity())
+            .then(loadFunctions())
+            .then($scope.closeImport());
         
         if (saveFile !== null) {
             //gives confirmation when import game is successfully loaded

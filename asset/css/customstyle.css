@@ -184,7 +184,7 @@ input[type="text"]#gamename {
     display: none;
 }
 
-.tech-tree li label {
+.tech-tree ul li label {
     width: 10rem;
     display: inline-block;
     box-shadow: inset 1px 1px 2px 1px grey;
@@ -197,21 +197,21 @@ input[type="text"]#gamename {
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }
 
-.tech-tree li label.purchased {
+.tech-tree ul li label.purchased {
     box-shadow: none;
     background-color: gold;
     color: black;
 }
 
-.tech-tree li label.available {
+.tech-tree ul li label.available {
     box-shadow: none;
     background-color: #47A5DF;
     color: white;
 }
 
-.tech-tree li label.available:hover,
-.tech-tree li label.purchased:hover,
-.tech-tree li input[type="radio"]:checked + label {
+.tech-tree ul li label.available:hover,
+.tech-tree ul li label.purchased:hover,
+.tech-tree ul li input[type="radio"]:checked + label {
     /* Google Material Shadow based on https://codepen.io/sdthornton/pen/wBZdXq  */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 4px rgba(0, 0, 0, 0.23);
 }
@@ -219,7 +219,7 @@ input[type="text"]#gamename {
 
 /* create connector lines between each item in the list */
 
-.tech-tree li:after {
+.tech-tree ul li:after {
     content: '';
     position: relative;
     margin-top: -6px;
@@ -229,14 +229,14 @@ input[type="text"]#gamename {
     height: 12px;
 }
 
-.purchased ~ .tech-tree li:after {
+.purchased ~ .tech-tree ul li:after {
     border-color: orange;
 }
 
 
 /* remove connector from last child/terminal node in the list */
 
-.tech-tree li:last-child:after {
+.tech-tree ul li:last-child:after {
     display: none;
 }
 
@@ -255,7 +255,7 @@ input[type="text"]#gamename {
 }
 
 @media only screen and (min-width: 768px) {
-    .main-branch li:last-child:after {
+    .main-branch ul li:last-child:after {
         content: '';
         border-left: 1px solid black;
         height: 15px;
@@ -295,8 +295,8 @@ input[type="text"]#gamename {
         width: 50%;
         margin-top: -19px;
     }
-    .left-branch li:first-child:before,
-    .right-branch li:first-child:before {
+    .left-branch ul li:first-child:before,
+    .right-branch ul li:first-child:before {
         content: '';
         border-left: 1px solid black;
         height: 15px;
